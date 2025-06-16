@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>Iniciar Sesión</title>
 <link rel="stylesheet" href="view/login.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
@@ -24,13 +25,13 @@
     </div>
   </div>
   <script>
-    document.getElementsById("loginFrom").addEventListener("submit", function(event){
+    document.getElementById("loginForm").addEventListener("submit", function(event){
       event.preventDefault();
 
       const usuario = document.getElementById("username").value.trim();
       const contraseña = document.getElementById("password").value.trim();
 
-      if (usuario == "" || contraseña === ""){
+      if (usuario === "" || contraseña === ""){
         Swal.fire({
           icon: 'warning',
           title: 'campos vacios',
@@ -41,15 +42,16 @@
       }else{
         Swal.fire({
           icon: 'success',
-          title: 'Bienvenido!',
+          title: '¡Bienvenido!',
         text: `Hola ${usuario}, iniciaste secion correctamente.`,
+        confirmButtonText: 'Continuar',
         confirmButtonColor: '#3085d6',
         });
       }
     });
   </script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </html>
 
 
