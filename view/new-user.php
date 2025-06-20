@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esther</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/bootstrap/css/bootstrap.min.css">
-
+    <script>
+        const base_url = '<?php echo BASE_URL; ?>';
+    </script>
 
 </head>
 
@@ -147,6 +149,7 @@
 </body>
 <script src="<?php echo BASE_URL; ?>view/function/user.js"></script>
 <script src="<?php echo BASE_URL; ?>view/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>
