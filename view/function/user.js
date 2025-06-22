@@ -19,6 +19,32 @@ function validar_form() {
 
         return;
     }
+    Swal.fire({
+        title: "¡Registro exitoso!",
+        imageUrl: "https://i.pinimg.com/originals/80/40/5f/80405fce21dd3f261308c7689abfd870.gif",
+        imageWidth: 200,
+        imageHeight: 150,
+        imageAlt: "Success celebration GIF",
+        confirmButtonText: "¡Perfecto! ",
+        confirmButtonColor: "#ff6b6b",
+        timer: 4000,
+        timerProgressBar: true,
+        customClass: {
+            popup: 'swal2-success-fun',
+            title: 'swal2-title-party',
+            htmlContainer: 'swal2-html-fun'
+        },
+        showClass: {
+            popup: 'animate__animated animate__tada'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__bounceOut'
+        },
+        icon: "success",
+        draggable: true
+    });
+
+
     registrarUsuario();
 }
 
@@ -36,14 +62,14 @@ async function registrarUsuario() {
         //capturar campos de formulario (HTML)
         const datos = new FormData(frm_user);
         //enviar datos a controlador
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar',{
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
             body: datos
         });
     } catch (e) {
-        console.log("Error al registrar Usuario:"+e);
+        console.log("Error al registrar Usuario:" + e);
     }
-    
+
 }
