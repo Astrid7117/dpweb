@@ -19,11 +19,10 @@ function validar_form() {
 
         return;
     }
+    /*
     Swal.fire({
         title: "¡Registro exitoso!",
-        imageUrl: "https://i.pinimg.com/originals/80/40/5f/80405fce21dd3f261308c7689abfd870.gif",
-        imageWidth: 200,
-        imageHeight: 150,
+
         imageAlt: "Success celebration GIF",
         confirmButtonText: "¡Perfecto! ",
         confirmButtonColor: "#ff6b6b",
@@ -42,7 +41,7 @@ function validar_form() {
         },
         icon: "success",
         draggable: true
-    });
+    });*/
 
 
     registrarUsuario();
@@ -68,6 +67,14 @@ async function registrarUsuario() {
             cache: 'no-cache',
             body: datos
         });
+        let json = await respuesta.jason();
+        //validamos que json.status sea = true
+        if (json.status) {
+            alert(json.msg);
+            Document.getElementById('frm_user').reset();
+        }else{
+            alert(json.msg);
+        }
     } catch (e) {
         console.log("Error al registrar Usuario:" + e);
     }
