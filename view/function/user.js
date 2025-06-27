@@ -67,11 +67,11 @@ async function registrarUsuario() {
             cache: 'no-cache',
             body: datos
         });
-        let json = await respuesta.jason();
+        let json = await respuesta.json();
         //validamos que json.status sea = true
         if (json.status) {
             alert(json.msg);
-            Document.getElementById('frm_user').reset();
+            document.getElementById('frm_user').reset();
         }else{
             alert(json.msg);
         }
