@@ -31,10 +31,20 @@ async function registrarCategoria() {
         });
         let json = await respuesta.json();
         if (json.status) {
-            alert(json.msg);
+            Swal.fire({
+                title: json.msg,
+                icon: "success",
+                draggable: true
+            });
+           
             document.getElementById('frm_categories').reset();
         } else {
-            alert(json.msg);
+            Swal.fire({
+                title: json.msg,
+                icon: "error",
+                draggable: false
+            });
+      
         }
     } catch (e) {
         console.log("Error al registrar Categoría: " + e);
