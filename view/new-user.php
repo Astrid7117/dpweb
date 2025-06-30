@@ -31,7 +31,7 @@
                         <a class="nav-link" href="#">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Categories</a>
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>categories">Categories</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Clients</a>
@@ -145,8 +145,8 @@
         </div>
     </div>
     </div>
-    
-    
+
+
 </body>
 <script src="<?php echo BASE_URL; ?>view/function/user.js"></script>
 <script src="<?php echo BASE_URL; ?>view/bootstrap/js/bootstrap.bundle.min.js"></script>
