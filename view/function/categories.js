@@ -1,4 +1,4 @@
-function validar_form() {
+     function validar_form() {
     let nombre = document.getElementById("nombre").value;
     let detalle = document.getElementById("detalle").value;
     if (nombre == "" || detalle == "") {
