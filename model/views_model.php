@@ -1,5 +1,5 @@
 <?php
-// Esta clase se encarga de validar y retornar la vista que debe mostrarse al usuario.
+// se declara una clase view model
 class viewModel{
      // Método estático protegido get_view
     // Recibe el nombre de la vista solicitada ($view) y devuelve su ruta si es válida.
@@ -16,7 +16,7 @@ class viewModel{
             }else{
                 $content = "404";
             }
-           // Si la vista solicitada es "login" (acceso permitido fuera de la lista blanca)
+// Si la vista no esta en la lista blanca se verifica si es la pagina de login, si es se le asigna login como contenido 
         }elseif($view == "login"){ 
               // En este caso, se devuelve directamente "login"
             $content = "login";

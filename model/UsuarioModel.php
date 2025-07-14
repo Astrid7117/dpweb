@@ -1,6 +1,7 @@
 <?php
 // Se incluye el archivo de conexión para poder interactuar con la base de datos
 require_once("../library/conexion.php");
+// tendra todas las funciones relacionadas con la tabla persona 
 class UsuarioModel
 {
     // Atributo privado para almacenar la conexión con la base de datos
@@ -37,6 +38,7 @@ class UsuarioModel
     public function buscarPersonaPorNroIdentidad($nro_identidad){
         $consulta = "SELECT id, razon_social, password FROM persona WHERE nro_identidad='$nro_identidad' LIMIT 1";
         $sql = $this->conexion->query($consulta);
+        // devuelve los datos como un objeto
         return $sql->fetch_object();
     }
 }
