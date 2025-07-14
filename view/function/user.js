@@ -1,4 +1,5 @@
 function validar_form() {
+    // Captura los valores de los campos del formulario
     let nro_documento = document.getElementById("nro_identidad").value;
     let razon_social = document.getElementById("razon_social").value;
     let telefono = document.getElementById("telefono").value;
@@ -9,6 +10,7 @@ function validar_form() {
     let cod_postal = document.getElementById("cod_postal").value;
     let direccion = document.getElementById("direccion").value;
     let rol = document.getElementById("rol").value;
+      // Verifica si alguno de los campos está vacío
     if (nro_documento == "" || razon_social == "" || telefono == "" || correo == "" || departamento == "" || provincia == "" || distrito == "" || cod_postal == "" || direccion == "" || rol == "") {
 
         Swal.fire({
@@ -17,7 +19,7 @@ function validar_form() {
             icon: "question"
         });
 
-        return;
+        return; // Detiene la función para no enviar el formulario
     }
     /*
     Swal.fire({
@@ -43,12 +45,12 @@ function validar_form() {
         draggable: true
     });*/
 
-
+ // Si todos los campos están llenos, llama a la función que registra el usuario
     registrarUsuario();
 }
-
+  // Captura el formulario
 if (document.querySelector('#frm_user')) {
-    //
+// Cuando se envíe el formulario, ejecuta la función validar_form
     let frm_user = document.querySelector('#frm_user');
     frm_user.onsubmit = function (e) {
         e.preventDefault();
@@ -67,11 +69,12 @@ async function registrarUsuario() {
             cache: 'no-cache',
             body: datos
         });
+          // Convierte la respuesta a formato JSON
         let json = await respuesta.json();
         //validamos que json.status sea = true
         if (json.status) {
             alert(json.msg);
-            document.getElementById('frm_user').reset();
+            document.getElementById('frm_user').reset(); // Limpia el formulario
         } else {
             alert(json.msg);
         }
@@ -84,6 +87,7 @@ async function registrarUsuario() {
 
 
 async function iniciar_sesion() {
+      // Captura los valores del input usuario y contraseña
     let usuario = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     if (usuario == "" ||  password == "") {
@@ -96,7 +100,9 @@ async function iniciar_sesion() {
         return;
     }
     try {
+         // Captura los datos del formulario de login
         const datos = new FormData(frm_login);
+        // Envía los datos al backend para validar
         let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=iniciar_sesion', {
             method: 'POST',
             mode: 'cors',
