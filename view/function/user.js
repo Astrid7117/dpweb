@@ -135,9 +135,9 @@ async function view_users() {
       // Define un objeto para mapear valores numéricos de roles a nombres descriptivos
         const rolesMap = {
             '1': 'Administrador',
-            '2': 'Contador',
-            '3': 'Almacenero',
-            '4': 'Usuario'
+            '2': 'Usuario',
+            '3': 'Contador',
+            '4': 'Almacenero'
         };
       usuarios.forEach((usuario, index) => {  // Itera sobre cada usuario en el array 'usuarios' recibido del servidor
         let fila = document.createElement('tr');  // Crea un nuevo elemento <tr> (fila) para la tabla
@@ -158,7 +158,7 @@ async function view_users() {
             let celdaRol = document.createElement('td');
             //celdaRol.textContent = usuario.rol;
             // Usa el mapeo para mostrar el nombre del rol en lugar del número
-            celdaRol.textContent = rolesMap[usuario.rol] || 'Desconocido'; // 'Desconocido' si el rol no está en el mapeo
+          celdaRol.textContent = rolesMap[usuario.rol] || 'Desconocido'; // 'Desconocido' si el rol no está en el mapeo
 
             let celdaEstado = document.createElement('td');
             celdaEstado.textContent = usuario.estado || 'Activo'; // Asume 'Activo' si no hay campo estado
