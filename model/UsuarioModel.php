@@ -46,8 +46,17 @@ class UsuarioModel
         $arr_usuarios = array();
         $consulta = "SELECT * FROM persona";
         $sql = $this->conexion->query($consulta);
+
+        // Mapeo de roles numéricos a nombres descriptivos
+    $rolesMap = [
+        '1' => 'Administrador',
+        '2' => 'Contador',
+        '3' => 'Almacenero',
+        '4' => 'Usuario'
+    ];
         while ($objeto = $sql->fetch_object()) {
-            array_push($arr_usuarios, $objeto);
+           array_push($arr_usuarios, $objeto);
+        
         }
         return $arr_usuarios;
     }

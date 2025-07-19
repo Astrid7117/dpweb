@@ -129,12 +129,63 @@ async function view_users() {
             mode: 'cors',
             cache: 'no-cache'
         });
-      
+      let usuarios = await respuesta.json();
+      let tbody = document.getElementById('content_users');
+      tbody.innerHTML = ''; // Limpia cualquier contenido previo en el <tbody> para evitar duplicados
+      // Define un objeto para mapear valores numéricos de roles a nombres descriptivos
+        const rolesMap = {
+            '1': 'Administrador',
+            '2': 'Contador',
+            '3': 'Almacenero',
+            '4': 'Usuario'
+        };
+      usuarios.forEach((usuario, index) => {  // Itera sobre cada usuario en el array 'usuarios' recibido del servidor
+        let fila = document.createElement('tr');  // Crea un nuevo elemento <tr> (fila) para la tabla
+        fila.classList.add('text-center');  // Agrega la clase 'text-center' para centrar el contenido de la fila
+        let celdaNro = document.createElement('td');  // Crea una celda (<td>) para el número secuencial
+            celdaNro.textContent = index + 1; // Número secuencial
+
+            // Crea celdas
+            let celdaDNI = document.createElement('td');
+            celdaDNI.textContent = usuario.nro_identidad;  // Asigna el valor
+
+            let celdaNombre = document.createElement('td');
+            celdaNombre.textContent = usuario.razon_social;
+
+            let celdaCorreo = document.createElement('td');
+            celdaCorreo.textContent = usuario.correo;
+
+            let celdaRol = document.createElement('td');
+            //celdaRol.textContent = usuario.rol;
+            // Usa el mapeo para mostrar el nombre del rol en lugar del número
+            celdaRol.textContent = rolesMap[usuario.rol] || 'Desconocido'; // 'Desconocido' si el rol no está en el mapeo
+
+            let celdaEstado = document.createElement('td');
+            celdaEstado.textContent = usuario.estado || 'Activo'; // Asume 'Activo' si no hay campo estado
+
+            // Añade las celdas a la fila
+            fila.appendChild(celdaNro);
+            fila.appendChild(celdaDNI);
+            fila.appendChild(celdaNombre);
+            fila.appendChild(celdaCorreo);
+            fila.appendChild(celdaRol);
+            fila.appendChild(celdaEstado);
+
+            // Añade la fila al cuerpo de la tabla
+            tbody.appendChild(fila);
+        });
     } catch (error) {
+        console.error("Error al obtener usuarios:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudieron cargar los usuarios."
+        });
 
     }
 
 }
+// Verifica si existe un elemento con id 'content_users' en el documento
 if (document.getElementById('content_users')) {
     view_users();
 }
