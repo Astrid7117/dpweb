@@ -75,5 +75,5 @@ if ($tipo == "iniciar_sesion") {
 
 if ($tipo == "ver_usuarios") {
   $usuarios = $objPersona->verUsuarios();
-  echo json_encode($usuarios);
+  echo json_encode($usuarios);        
 }

@@ -48,12 +48,12 @@ class UsuarioModel
         $sql = $this->conexion->query($consulta);
 
         // Mapeo de roles numéricos a nombres descriptivos
-    $rolesMap = [
+    /*$rolesMap = [
         '1' => 'Administrador',
         '2' => 'Usuario',
         '3' => 'Contador',
         '4' => 'Almacenero'
-    ];
+    ];*/
         while ($objeto = $sql->fetch_object()) {
            array_push($arr_usuarios, $objeto);
         

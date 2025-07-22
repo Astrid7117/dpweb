@@ -129,20 +129,20 @@ async function view_users() {
             mode: 'cors',
             cache: 'no-cache'
         });
-      let usuarios = await respuesta.json();
-      let tbody = document.getElementById('content_users');
-      tbody.innerHTML = ''; // Limpia cualquier contenido previo en el <tbody> para evitar duplicados
-      // Define un objeto para mapear valores numéricos de roles a nombres descriptivos
+        let usuarios = await respuesta.json();
+        let tbody = document.getElementById('content_users');
+        tbody.innerHTML = ''; // Limpia cualquier contenido previo en el <tbody> para evitar duplicados
+        // Define un objeto para mapear valores numéricos de roles a nombres descriptivos 
         const rolesMap = {
             '1': 'Administrador',
             '2': 'Usuario',
             '3': 'Contador',
             '4': 'Almacenero'
         };
-      usuarios.forEach((usuario, index) => {  // Itera sobre cada usuario en el array 'usuarios' recibido del servidor
-        let fila = document.createElement('tr');  // Crea un nuevo elemento <tr> (fila) para la tabla
-        fila.classList.add('text-center');  // Agrega la clase 'text-center' para centrar el contenido de la fila
-        let celdaNro = document.createElement('td');  // Crea una celda (<td>) para el número secuencial
+        usuarios.forEach((usuario, index) => {  // Itera sobre cada usuario en el array 'usuarios' recibido del servidor
+            let fila = document.createElement('tr');  // Crea un nuevo elemento <tr> (fila) para la tabla
+            fila.classList.add('text-center');  // Agrega la clase 'text-center' para centrar el contenido de la fila
+            let celdaNro = document.createElement('td');  // Crea una celda (<td>) para el número secuencial
             celdaNro.textContent = index + 1; // Número secuencial
 
             // Crea celdas
@@ -158,10 +158,22 @@ async function view_users() {
             let celdaRol = document.createElement('td');
             //celdaRol.textContent = usuario.rol;
             // Usa el mapeo para mostrar el nombre del rol en lugar del número
-          celdaRol.textContent = rolesMap[usuario.rol] || 'Desconocido'; // 'Desconocido' si el rol no está en el mapeo
+            celdaRol.textContent = rolesMap[usuario.rol] || 'Desconocido'; // 'Desconocido' si el rol no está en el mapeo
 
             let celdaEstado = document.createElement('td');
             celdaEstado.textContent = usuario.estado || 'Activo'; // Asume 'Activo' si no hay campo estado
+
+           const celdaAcciones = document.createElement('td');
+            const btnEditar = document.createElement('a');
+            btnEditar.textContent = 'Editar';
+            /*btnEditar.className = 'btn btn-sm btn-primary';*/
+            btnEditar.setAttribute('href', base_url+'edit_user/'+usuario.id);
+            btnEditar.setAttribute('data-bs-target', '#modalEditarUsuario');
+            btnEditar.addEventListener('click', () => {
+                cargarDatosEnModal(usuario); 
+            });
+
+            celdaAcciones.appendChild(btnEditar);
 
             // Añade las celdas a la fila
             fila.appendChild(celdaNro);
@@ -170,6 +182,8 @@ async function view_users() {
             fila.appendChild(celdaCorreo);
             fila.appendChild(celdaRol);
             fila.appendChild(celdaEstado);
+            fila.appendChild(celdaAcciones);
+
 
             // Añade la fila al cuerpo de la tabla
             tbody.appendChild(fila);
