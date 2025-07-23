@@ -1,9 +1,9 @@
-
 <!-- INICIO DE CUERPO DE PAGINA -->
     <div class="container-fluid">
         <div class="card">
             <h5 class="card-header">Registro de Usuario</h5>
             <form id="frm_user" action="" method="">
+                <input type="hidden" id="id_persona" name="id_persona">
                 <div class="card-body">
                     <div class="mb-3 row">
                         <label for="nro_identidad" class="col-sm-4 col-form-label">Nro de Documento :</label>
@@ -76,7 +76,7 @@
                     <button type="submit" class="btn btn-success">Registrar</button>
                     <button type="reset" class="btn btn-info">Limpiar</button>
                     <button type="button" class="btn btn-danger">Cancelar</button>
-                     
+                    <button type="button" class="btn btn-danger" id="btn_guardar_cambios">Guardar Cambios</button>
                     
                 </div>
             </form>
@@ -85,7 +85,17 @@
     </div>
 <!-- FIN DE CUERPO DE PAGINA -->
 
+ <script src="<?php echo BASE_URL; ?>view/function/user.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    let partes = window.location.pathname.split('/');
+    let id = partes[partes.length - 1];
 
+    if (!isNaN(id)) {
+        obtenerUsuarioPorId(id); // Cargar los datos si estamos editando
+    }
+});
+</script>
 
 
  

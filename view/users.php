@@ -1,5 +1,6 @@
 <div class="container">
     <h4 class="mt-3 mb-3">Lista de usuarios</h4>
+    
 <table class="table table-bordered border-primary table-striped">
     <thead class="table-dark">
         <tr class="text-center">

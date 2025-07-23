@@ -83,6 +83,30 @@ async function registrarUsuario() {
     }
 
 }
+//
+
+async function actualizarUsuario() {
+    try {
+        const datos = new FormData(frm_user);
+        console.log([...datos]);
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=actualizar_usuario', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+
+        let json = await respuesta.json();
+        if (json.status) {
+            alert(json.msg);
+            location.href = base_url + 'usuarios'; // Redirige si deseas
+        } else {
+            alert(json.msg);
+        }
+    } catch (e) {
+        console.log("Error al actualizar usuario:", e);
+    }
+}
 
 
 
@@ -122,84 +146,79 @@ async function iniciar_sesion() {
     }
 }
 
+//
+async function obtenerUsuarioPorId(id) {
+    try {
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=obtener_usuario&id=' + id);
+        let usuario = await respuesta.json();
+        document.getElementById('id_persona').value = usuario.id || '';
+        document.getElementById('nro_identidad').value = usuario.nro_identidad || '';
+        document.getElementById('razon_social').value = usuario.razon_social || '';
+        document.getElementById('telefono').value = usuario.telefono || '';
+        document.getElementById('correo').value = usuario.correo || '';
+        document.getElementById('departamento').value = usuario.departamento || '';
+        document.getElementById('provincia').value = usuario.provincia || '';
+        document.getElementById('distrito').value = usuario.distrito || '';
+        document.getElementById('cod_postal').value = usuario.cod_postal || '';
+        document.getElementById('direccion').value = usuario.direccion || '';
+        document.getElementById('rol').value = usuario.rol || '';
+    } catch (e) {
+        console.error("Error al obtener usuario por ID", e); //  AHORA ESTÁ BIEN
+    }
+}
+
+
 async function view_users() {
     try {
         let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_usuarios', {
             method: 'POST',
             mode: 'cors',
-            cache: 'no-cache'
+            cache: 'no-cache',
         });
-        let usuarios = await respuesta.json();
-        let tbody = document.getElementById('content_users');
-        tbody.innerHTML = ''; // Limpia cualquier contenido previo en el <tbody> para evitar duplicados
-        // Define un objeto para mapear valores numéricos de roles a nombres descriptivos 
+
+        let json = await respuesta.json();
+        let content_users = document.getElementById('content_users');
+        content_users.innerHTML = '';
+
+        // Mapeo de roles numéricos a texto
         const rolesMap = {
             '1': 'Administrador',
             '2': 'Usuario',
             '3': 'Contador',
             '4': 'Almacenero'
         };
-        usuarios.forEach((usuario, index) => {  // Itera sobre cada usuario en el array 'usuarios' recibido del servidor
-            let fila = document.createElement('tr');  // Crea un nuevo elemento <tr> (fila) para la tabla
-            fila.classList.add('text-center');  // Agrega la clase 'text-center' para centrar el contenido de la fila
-            let celdaNro = document.createElement('td');  // Crea una celda (<td>) para el número secuencial
-            celdaNro.textContent = index + 1; // Número secuencial
-
-            // Crea celdas
-            let celdaDNI = document.createElement('td');
-            celdaDNI.textContent = usuario.nro_identidad;  // Asigna el valor
-
-            let celdaNombre = document.createElement('td');
-            celdaNombre.textContent = usuario.razon_social;
-
-            let celdaCorreo = document.createElement('td');
-            celdaCorreo.textContent = usuario.correo;
-
-            let celdaRol = document.createElement('td');
-            //celdaRol.textContent = usuario.rol;
-            // Usa el mapeo para mostrar el nombre del rol en lugar del número
-            celdaRol.textContent = rolesMap[usuario.rol] || 'Desconocido'; // 'Desconocido' si el rol no está en el mapeo
-
-            let celdaEstado = document.createElement('td');
-            celdaEstado.textContent = usuario.estado || 'Activo'; // Asume 'Activo' si no hay campo estado
-
-           const celdaAcciones = document.createElement('td');
-            const btnEditar = document.createElement('a');
-            btnEditar.textContent = 'Editar';
-            /*btnEditar.className = 'btn btn-sm btn-primary';*/
-            btnEditar.setAttribute('href', base_url+'edit_user/'+usuario.id);
-            btnEditar.setAttribute('data-bs-target', '#modalEditarUsuario');
-            btnEditar.addEventListener('click', () => {
-                cargarDatosEnModal(usuario); 
-            });
-
-            celdaAcciones.appendChild(btnEditar);
-
-            // Añade las celdas a la fila
-            fila.appendChild(celdaNro);
-            fila.appendChild(celdaDNI);
-            fila.appendChild(celdaNombre);
-            fila.appendChild(celdaCorreo);
-            fila.appendChild(celdaRol);
-            fila.appendChild(celdaEstado);
-            fila.appendChild(celdaAcciones);
-
-
-            // Añade la fila al cuerpo de la tabla
-            tbody.appendChild(fila);
-        });
-    } catch (error) {
-        console.error("Error al obtener usuarios:", error);
-        Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "No se pudieron cargar los usuarios."
+        
+        json.forEach((user, index) => {
+            let fila = document.createElement('tr');
+            fila.classList.add('text-center');
+            fila.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${user.nro_identidad || ''}</td>
+                <td>${user.razon_social || ''}</td>
+                <td>${user.correo || ''}</td>
+                <td>${rolesMap[user.rol] || 'Desconocido'}</td>
+                <td>${user.estado || 'Activo'}</td>
+                <td>
+                    <a href="` + base_url + `update/` + user.id + `" class="btn btn-sm btn-primary">Editar</a>
+                </td>
+               
+            `;
+            content_users.appendChild(fila);
         });
 
+    } catch (e) {
+        console.log("Error al ver Usuario: " + e);
     }
-
 }
-// Verifica si existe un elemento con id 'content_users' en el documento
+
 if (document.getElementById('content_users')) {
     view_users();
 }
+
+//
+if (document.getElementById('btn_guardar_cambios')) {
+    document.getElementById('btn_guardar_cambios').addEventListener('click', function () {
+        actualizarUsuario(); // Llama a la función que hará el update
+    });
+}
+

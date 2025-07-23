@@ -1,10 +1,13 @@
 <?php
+
 // Se incluye el modelo UsuarioModel.php que contiene la lógica de conexión y operaciones con la base de datos
 require_once("../model/UsuarioModel.php");
+
 // Se crea una instancia del modelo para poder usar sus métodos
 $objPersona = new UsuarioModel();
 // Se obtiene el tipo de operación que se desea realizar (registrar o iniciar_sesion)
 $tipo = $_GET['tipo'];
+
 
 if ($tipo == 'registrar') {
    // print_r ($_POST);
@@ -43,6 +46,7 @@ if ($tipo == 'registrar') {
    echo json_encode($arrResponse);
 }
 
+
 // Se capturan los campos del formulario de login
 if ($tipo == "iniciar_sesion") {
    $nro_identidad = $_POST['username'];
@@ -73,7 +77,43 @@ if ($tipo == "iniciar_sesion") {
    echo json_encode($respuesta);
 }
 
+
 if ($tipo == "ver_usuarios") {
   $usuarios = $objPersona->verUsuarios();
   echo json_encode($usuarios);        
 }
+
+if ($_GET['tipo'] == 'obtener_usuario') {
+    header('Content-Type: application/json');
+
+    $id = $_GET['id'];
+
+    require_once '../model/UsuarioModel.php';
+
+    $modelo = new UsuarioModel();
+    $usuario = $modelo->obtenerUsuarioPorId($id);
+
+    echo json_encode($usuario);
+    exit;
+}
+
+//
+if ($tipo == "actualizar_usuario") {
+    $data = $_POST;
+    $modelo = new UsuarioModel();
+    
+    $nro = $data['nro_identidad'];
+    $id_actual = $data['id_persona'];
+
+    $verificar = $modelo->buscarPorDocumento($nro);
+    
+    if ($verificar && $verificar['id'] != $id_actual) {
+        echo json_encode(['status' => false, 'msg' => 'Este número de documento ya está registrado con otro usuario.']);
+    } else {
+        $actualizado = $modelo->actualizarPersona($data);
+        echo json_encode(['status' => $actualizado, 'msg' => $actualizado ? 'Usuario actualizado correctamente' : 'Error al actualizar']);
+    }
+}
+
+
+

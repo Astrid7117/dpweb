@@ -42,22 +42,60 @@ class UsuarioModel
         // devuelve los datos como un objeto
         return $sql->fetch_object();
     }
+
+
     public function verUsuarios() {
         $arr_usuarios = array();
         $consulta = "SELECT * FROM persona";
         $sql = $this->conexion->query($consulta);
-
-        // Mapeo de roles numéricos a nombres descriptivos
-    /*$rolesMap = [
-        '1' => 'Administrador',
-        '2' => 'Usuario',
-        '3' => 'Contador',
-        '4' => 'Almacenero'
-    ];*/
         while ($objeto = $sql->fetch_object()) {
            array_push($arr_usuarios, $objeto);
         
         }
         return $arr_usuarios;
     }
+ public function obtenerUsuarioPorId($id) {
+        $stmt = $this->conexion->prepare("SELECT * FROM persona WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+        return $resultado->fetch_assoc();
+    }
+
+    public function buscarPorDocumento($nro_identidad) {
+    $stmt = $this->conexion->prepare("SELECT id FROM persona WHERE nro_identidad = ?");
+    $stmt->bind_param("s", $nro_identidad);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    return $resultado->fetch_assoc();
 }
+
+public function actualizarPersona($data) {
+    $stmt = $this->conexion->prepare("UPDATE persona SET nro_identidad = ?, razon_social = ?, telefono = ?, correo = ?, departamento = ?, provincia = ?, distrito = ?, cod_postal = ?, direccion = ?, rol = ? WHERE id = ?");
+    
+    $stmt->bind_param(
+        "ssssssssssi",
+        $data['nro_identidad'],
+        $data['razon_social'],
+        $data['telefono'],
+        $data['correo'],
+        $data['departamento'],
+        $data['provincia'],
+        $data['distrito'],
+        $data['cod_postal'],
+        $data['direccion'],
+        $data['rol'],
+        $data['id_persona']
+    );
+
+    return $stmt->execute(); // Devuelve true si se actualizó correctamente, false si no
+}
+
+
+}
+
+
+
+
+
