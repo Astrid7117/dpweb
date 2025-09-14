@@ -91,9 +91,23 @@ public function actualizarPersona($data) {
 
     return $stmt->execute(); // Devuelve true si se actualizó correctamente, false si no
 }
-
+// eliminar usuario 
+public function eliminarUsuario($id) {
+    $stmt = $this->conexion->prepare("DELETE FROM persona WHERE id = ?");
+    $stmt->bind_param("i", $id); // "i" porque es un número entero (id)
+    
+    if ($stmt->execute()) {
+        return ["status" => true, "msg" => "Usuario eliminado correctamente"];
+    } else {
+        return ["status" => false, "msg" => "Error al eliminar el usuario"];
+    }
+}
 
 }
+
+
+
+
 
 
 

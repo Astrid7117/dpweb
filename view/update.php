@@ -69,14 +69,11 @@
                                 <option value="3">contador</option>
                                 <option value="4">almacenero</option>
                             </select>
-        
-                           
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Registrar</button>
-                    <button type="reset" class="btn btn-info">Limpiar</button>
-                    <button type="button" class="btn btn-danger">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="btn_guardar_cambios">Guardar Cambios</button>
+                  <button type="button" class="btn btn-primary" id="btn_guardar_cambios">Guardar Cambios</button>
+                   <a href="<?=BASE_URL ?>users" type="button" class="btn btn-danger">Cancelar</a>
+                  
                     
                 </div>
             </form>
@@ -85,8 +82,11 @@
     </div>
 <!-- FIN DE CUERPO DE PAGINA -->
 
+
  <script src="<?php echo BASE_URL; ?>view/function/user.js"></script>
+
 <script>
+    
 document.addEventListener('DOMContentLoaded', () => {
     let partes = window.location.pathname.split('/');
     let id = partes[partes.length - 1];
@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+
 
 
  

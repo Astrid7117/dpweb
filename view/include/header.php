@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esther</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/bootstrap/css/bootstrap.min.css">
+    
     <script>
         const base_url = '<?php echo BASE_URL; ?>';
     </script>
@@ -28,11 +29,18 @@
                         <a class="nav-link" href="<?=BASE_URL ?>users">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Products</a>
+                        <a class="nav-link" href="<?=BASE_URL ?>products">Products</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="<?=BASE_URL ?>produc">Produc</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?=BASE_URL ?>categories">Categories</a>
                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="<?=BASE_URL ?>categoria">Categoria</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#">Clients</a>
                     </li>

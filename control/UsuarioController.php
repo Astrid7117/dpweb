@@ -115,5 +115,9 @@ if ($tipo == "actualizar_usuario") {
     }
 }
 
-
-
+// eliminar usuario 
+if ($tipo == "eliminar_usuario") {
+    $id = $_GET['id'] ?? 0;
+    $result = $objPersona->eliminarUsuario($id);
+    echo json_encode($result);
+}
