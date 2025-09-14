@@ -92,6 +92,7 @@ async function actualizarProducto() {
     try {
         const datos = new FormData(document.getElementById('frm_edit_produc'));
         const idProducto = document.getElementById('id_producto').value;
+
         if (idProducto) {
             datos.append('id_producto', idProducto);
         } else {
@@ -104,13 +105,13 @@ async function actualizarProducto() {
         }
 
         // Depuración: Imprime los datos enviados
-       /*for (let pair of datos.entries()) {
+        for (let pair of datos.entries()) {
             console.log(`${pair[0]}: ${pair[1]}`);
-        }*/
+        }
 
         let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=actualizar_producto', {
             method: 'POST',
-            mode: 'cors', // Cambiado de 'no-cors' a 'cors'
+            mode: 'cors',
             cache: 'no-cache',
             body: datos
         });

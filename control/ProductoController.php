@@ -72,7 +72,8 @@ if ($_GET['tipo'] == 'obtener_producto') {
 // actualizar
 if ($tipo == "actualizar_producto") {
     $data = $_POST;
-    error_log("Valor de detalle recibido: " . ($data['detalle'] ?? 'No recibido')); // Depuración
+    error_log("Datos recibidos en controlador: " . print_r($data, true));
+
     $modelo = new ProductoModel();
     
     $nombre = $data['nombre'];
@@ -106,4 +107,3 @@ if ($tipo == "eliminar_producto") {
     $result = $objProducto->eliminarProducto($id);
     echo json_encode($result);
 }
-?>

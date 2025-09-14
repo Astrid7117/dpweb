@@ -63,10 +63,20 @@ class ProductoModel
 }
 // actualizar 
 public function actualizarProducto($data) {
+    // Depuración antes de la consulta
+    error_log("Datos recibidos en modelo: " . print_r($data, true));
+    error_log("Tipo de dato de detalle: " . gettype($data['detalle']));
+    error_log("Valor de detalle antes de bind: " . var_export($data['detalle'], true));
+
     $stmt = $this->conexion->prepare("UPDATE producto SET codigo = ?, nombre = ?, detalle = ?, precio = ?, stock = ?, fecha_vencimiento = ?, imagen = ? WHERE id = ?");
     
+    if ($stmt === false) {
+        error_log("Error al preparar la consulta: " . $this->conexion->error);
+        return false;
+    }
+
     $stmt->bind_param(
-        "ssdsissi",
+        "ssssdssi",
         $data['codigo'],
         $data['nombre'],
         $data['detalle'],
@@ -77,8 +87,14 @@ public function actualizarProducto($data) {
         $data['id_producto']
     );
 
-    error_log("Valor de detalle antes de actualizar: " . ($data['detalle'] ?? 'No recibido')); // Depuración
     $resultado = $stmt->execute();
+    if ($resultado === false) {
+        error_log("Error al ejecutar la consulta: " . $this->conexion->error);
+    } else {
+        error_log("Consulta ejecutada con éxito");
+    }
+
+    // Depuración después de la consulta
     $stmt->close();
     return $resultado;
 }
@@ -96,4 +112,3 @@ public function eliminarProducto($id) {
 }
 
 }
-?>
