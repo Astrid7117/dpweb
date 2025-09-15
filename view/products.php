@@ -48,6 +48,15 @@
                         <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
                     </div>
                 </div>
+                 <div class="mb-3 row">
+                    <label for="id_categoria" class="col-sm-4 col-form-label">Categoría:</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="id_categoria" name="id_categoria" required>
+                            <option value="">Seleccione una categoría</option>
+                          
+                        </select>
+                    </div>
+                </div>
 
                     <div class="d-flex justify-content-end gap-2">
                         <button type="submit" class="btn btn-success">Registrar</button>
@@ -60,3 +69,8 @@
     </div>
 <!-- FIN DE CUERPO DE PAGINA -->
 <script src="<?php echo BASE_URL; ?>view/function/products.js"></script> 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarCategorias(); // Cargar categorías al iniciar la página
+    });
+</script>

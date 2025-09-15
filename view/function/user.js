@@ -21,29 +21,7 @@ function validar_form() {
 
         return; // Detiene la función para no enviar el formulario
     }
-    /*
-    Swal.fire({
-        title: "¡Registro exitoso!",
-
-        imageAlt: "Success celebration GIF",
-        confirmButtonText: "¡Perfecto! ",
-        confirmButtonColor: "#ff6b6b",
-        timer: 4000,
-        timerProgressBar: true,
-        customClass: {
-            popup: 'swal2-success-fun',
-            title: 'swal2-title-party',
-            htmlContainer: 'swal2-html-fun'
-        },
-        showClass: {
-            popup: 'animate__animated animate__tada'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__bounceOut'
-        },
-        icon: "success",
-        draggable: true
-    });*/
+    
 
     // Si todos los campos están llenos, llama a la función que registra el usuario
     registrarUsuario();

@@ -17,11 +17,11 @@ if ($tipo == 'registrar') {
     $precio = $_POST['precio'];
     $stock = $_POST['stock'];
     $fecha_vencimiento = $_POST['fecha_vencimiento'];
+    $id_categoria = $_POST['id_categoria'] ?? NULL;
 
-    // Manejo de la imagen
     $imagen = '';
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
-        $target_dir = "../uploads/productos/"; // Asegúrate de que esta carpeta exista y tenga permisos
+        $target_dir = "../Uploads/productos/";
         if (!file_exists($target_dir)) {
             mkdir($target_dir, 0777, true);
         }
@@ -29,21 +29,26 @@ if ($tipo == 'registrar') {
         move_uploaded_file($_FILES["imagen"]["tmp_name"], $imagen);
     }
 
-    // Validación de campos vacíos
-    if ($codigo == "" || $nombre == "" || $detalle == "" || $precio == "" || $stock == "" || $fecha_vencimiento == "") {
-        $arrResponse = array('status' => false, 'msg' => 'Error, campos vacios');
+    if ($codigo == "" || $nombre == "" || $detalle == "" || $precio == "" || $stock == "" || $fecha_vencimiento == "" || $id_categoria == "") {
+        $arrResponse = array('status' => false, 'msg' => 'Error, campos vacíos');
     } else {
-        // Verifica si existe un producto con el mismo nombre (opcional, ajusta según necesidades)
         $existeProducto = $objProducto->existeProducto($nombre);
         if ($existeProducto > 0) {
             $arrResponse = array('status' => false, 'msg' => 'Error, producto ya existe');
         } else {
-            // Registra el producto
-            $respuesta = $objProducto->registrar($codigo, $nombre, $detalle, $precio, $stock, $fecha_vencimiento, $imagen);
-            if ($respuesta) {
-                $arrResponse = array('status' => true, 'msg' => 'Registrado Correctamente');
+            // Validar si id_categoria existe
+            require_once("../model/CategoriaModel.php");
+            $objCategoria = new CategoriaModel();
+            $categoria = $objCategoria->obtenerCategoriaPorId($id_categoria);
+            if (!$categoria) {
+                $arrResponse = array('status' => false, 'msg' => 'Error, la categoría no existe');
             } else {
-                $arrResponse = array('status' => false, 'msg' => 'Error, fallo en registro');
+                $respuesta = $objProducto->registrar($codigo, $nombre, $detalle, $precio, $stock, $fecha_vencimiento, $imagen, $id_categoria);
+                if ($respuesta) {
+                    $arrResponse = array('status' => true, 'msg' => 'Registrado correctamente');
+                } else {
+                    $arrResponse = array('status' => false, 'msg' => 'Error, fallo en registro');
+                }
             }
         }
     }
@@ -52,19 +57,13 @@ if ($tipo == 'registrar') {
 
 if ($tipo == "ver_productos") {
     $productos = $objProducto->verProductos();
-    echo json_encode($productos);        
+    echo json_encode($productos);
 }
 
-if ($_GET['tipo'] == 'obtener_producto') {
+if ($tipo == 'obtener_producto') {
     header('Content-Type: application/json');
-
     $id = $_GET['id'];
-
-    require_once '../model/ProductoModel.php';
-
-    $modelo = new ProductoModel();
-    $producto = $modelo->obtenerProductoPorId($id);
-
+    $producto = $objProducto->obtenerProductoPorId($id);
     echo json_encode($producto);
     exit;
 }
@@ -74,30 +73,36 @@ if ($tipo == "actualizar_producto") {
     $data = $_POST;
     error_log("Datos recibidos en controlador: " . print_r($data, true));
 
-    $modelo = new ProductoModel();
-    
     $nombre = $data['nombre'];
     $id_actual = $data['id_producto'];
+    $id_categoria = $data['id_categoria'] ?? NULL;
 
-    $verificar = $modelo->buscarPorNombre($nombre);
-    
+    $verificar = $objProducto->buscarPorNombre($nombre);
     if ($verificar && $verificar['id'] != $id_actual) {
         echo json_encode(['status' => false, 'msg' => 'Error, producto ya existe.']);
     } else {
-        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
-            $target_dir = "../Uploads/productos/";
-            if (!file_exists($target_dir)) {
-                mkdir($target_dir, 0777, true);
-            }
-            $data['imagen'] = $target_dir . basename($_FILES["imagen"]["name"]);
-            move_uploaded_file($_FILES["imagen"]["tmp_name"], $data['imagen']);
+        // Validar si id_categoria existe
+        require_once("../model/CategoriaModel.php");
+        $objCategoria = new CategoriaModel();
+        if ($id_categoria && !$objCategoria->obtenerCategoriaPorId($id_categoria)) {
+            echo json_encode(['status' => false, 'msg' => 'Error, la categoría no existe']);
         } else {
-            $productoActual = $modelo->obtenerProductoPorId($id_actual);
-            $data['imagen'] = $productoActual['imagen'];
-        }
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+                $target_dir = "../Uploads/productos/";
+                if (!file_exists($target_dir)) {
+                    mkdir($target_dir, 0777, true);
+                }
+                $data['imagen'] = $target_dir . basename($_FILES["imagen"]["name"]);
+                move_uploaded_file($_FILES["imagen"]["tmp_name"], $data['imagen']);
+            } else {
+                $productoActual = $objProducto->obtenerProductoPorId($id_actual);
+                $data['imagen'] = $productoActual['imagen'];
+            }
 
-        $actualizado = $modelo->actualizarProducto($data);
-        echo json_encode(['status' => $actualizado, 'msg' => $actualizado ? 'Producto actualizado correctamente' : 'Error al actualizar']);
+            $data['id_categoria'] = $id_categoria;
+            $actualizado = $objProducto->actualizarProducto($data);
+            echo json_encode(['status' => $actualizado, 'msg' => $actualizado ? 'Producto actualizado correctamente' : 'Error al actualizar']);
+        }
     }
 }
 
