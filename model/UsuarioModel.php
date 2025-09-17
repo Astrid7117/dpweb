@@ -17,7 +17,7 @@ class UsuarioModel
     // Método para registrar una nueva persona en la base de datos
     public function registrar($nro_identidad, $razon_social, $telefono, $correo, $departamento, $provincia, $distrito, $cod_postal, $direccion, $rol, $password)
     {
-        $consulta = "INSERT INTO persona (nro_identidad, razon_social, telefono, correo, departamento, provincia, distrito, cod_postal, direccion, rol, password) VALUES ('$nro_identidad', '$razon_social', '$telefono', '$correo', '$departamento', '$provincia', '$distrito',' $cod_postal', '$direccion', '$rol', '$password')";
+        $consulta = "INSERT INTO persona (nro_identidad, razon_social, telefono, correo, departamento, provincia, distrito, cod_postal, direccion, rol, password) VALUES ('$nro_identidad', '$razon_social', '$telefono', '$correo', '$departamento', '$provincia', '$distrito','$cod_postal', '$direccion', '$rol', '$password')";
         // Se ejecuta la consulta
         $sql = $this->conexion->query($consulta);
         // Si se ejecuta correctamente, devuelve el ID del nuevo registro insertado

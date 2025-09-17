@@ -34,16 +34,18 @@ class ProductoModel
         return $sql->num_rows;
     }
 
-    public function verProductos()
-    {
-        $arr_productos = array();
-        $consulta = "SELECT * FROM producto";
-        $sql = $this->conexion->query($consulta);
-        while ($objeto = $sql->fetch_object()) {
-            array_push($arr_productos, $objeto);
-        }
-        return $arr_productos;
+   public function verProductos()
+{
+    $arr_productos = array();
+    $consulta = "SELECT p.*, c.nombre AS categoria 
+                 FROM producto p 
+                 LEFT JOIN categoria c ON p.id_categoria = c.id";
+    $sql = $this->conexion->query($consulta);
+    while ($objeto = $sql->fetch_object()) {
+        array_push($arr_productos, $objeto);
     }
+    return $arr_productos;
+}
 
 
 

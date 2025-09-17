@@ -247,6 +247,7 @@ async function view_productos() {
         });
 
         let json = await respuesta.json();
+        console.log("Productos recibidos:", json); // Agrega esto para depurar
         let content_productos = document.getElementById('content_productos');
         if (content_productos) {
             content_productos.innerHTML = '';
@@ -262,6 +263,7 @@ async function view_productos() {
                     <td>${producto.stock || ''}</td>
                     <td>${producto.fecha_vencimiento || ''}</td>
                     <td><img src="${producto.imagen || ''}" alt="Imagen" width="50"></td>
+                    <td>${producto.categoria || ''}</td>
                     <td>
                         <a href="${base_url}edit-producto/${producto.id}" class="btn btn-outline-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

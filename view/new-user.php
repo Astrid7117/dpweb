@@ -84,6 +84,7 @@
     </div>
     </div>
 <!-- FIN DE CUERPO DE PAGINA -->
+<script src="<?php echo BASE_URL; ?>view/function/user.js"></script> 
 
 
 
