@@ -29,11 +29,13 @@ if ($tipo == 'registrar') {
 //
 
 if ($tipo == "ver_categorias") {
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
     $categorias = $objCategoria->verCategorias(); // Método que devuelve todas las categorías
     header('Content-Type: application/json');
     echo json_encode($categorias);
     exit;
 }
+
 
 if ($tipo == "obtener_categoria") {
     header('Content-Type: application/json');
@@ -45,7 +47,7 @@ if ($tipo == "obtener_categoria") {
 }
 if ($tipo == 'obtener_producto') {
     header('Content-Type: application/json');
-    $id = $_GET['id'];
+    $id = $_GET['id'];    
 
     require_once '../model/ProductoModel.php';
     $modelo = new ProductoModel();

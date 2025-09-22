@@ -40,6 +40,48 @@ async function cargarCategorias() {
     }
 }
 
+// cargar proveedor 
+async function cargarUsuarios() {
+    try {
+        console.log("Intentando cargar usuarios desde:", base_url + 'control/UsuarioController.php?tipo=ver_usuarios');
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_usuarios', {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'no-cache',
+        });
+        if (!respuesta.ok) {
+            throw new Error(`Respuesta no OK: ${respuesta.status} - ${respuesta.statusText}`);
+        }
+        let usuarios = await respuesta.json();
+        console.log("Usuarios recibidos:", usuarios);
+
+        let selectUsuario = document.getElementById('id_persona');
+        if (selectUsuario) {
+            selectUsuario.innerHTML = '<option value="">Seleccionar un proveedor</option>';
+            if (Array.isArray(usuarios) && usuarios.length > 0) {
+                usuarios.forEach(usuario => {
+                    let option = document.createElement('option');
+                    option.value = usuario.id;
+                    option.textContent = `${usuario.id} - ${usuario.nombre}`;
+                    selectUsuario.appendChild(option);
+                });
+            } else {
+                console.warn('No se recibieron usuarios o el array está vacío');
+                selectUsuario.innerHTML += '<option value="" disabled>No hay usuarios disponibles</option>';
+            }
+        } else {
+            console.error('Elemento #id_persona no encontrado en el DOM');
+        }
+    } catch (e) {
+        console.error("Error al cargar usuarios:", e);
+        Swal.fire({
+            title: "Error",
+            text: "No se pudieron cargar los usuarios: " + e.message,
+            icon: "error"
+        });
+    }
+}
+
 
 //
 function validar_form() {
