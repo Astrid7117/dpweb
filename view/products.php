@@ -1,11 +1,10 @@
-
-    <!-- INICIO DE CUERPO DE PAGINA -->
-    <div class="container-fluid mt-4">
-        <div class="card">
-            <h5 class="card-header">Registrar Producto</h5>
-            <form id="frm_produc">
-              <div class="card-body">
-                  <div class="mb-3 row">
+<!-- INICIO DE CUERPO DE PAGINA -->
+<div class="container-fluid mt-4">
+    <div class="card">
+        <h5 class="card-header">Registrar Producto</h5>
+        <form id="frm_produc" action="" method="" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="mb-3 row">
                     <label for="codigo" class="col-sm-4 col-form-label">Codigo:</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="codigo" name="codigo" required>
@@ -15,7 +14,7 @@
                     <label for="nombre" class="col-sm-4 col-form-label">Nombre:</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="nombre" name="nombre" required aria-describedby="nombreHelp">
-                        
+
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -48,27 +47,29 @@
                         <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
                     </div>
                 </div>
-                 <div class="mb-3 row">
+                <div class="mb-3 row">
                     <label for="id_categoria" class="col-sm-4 col-form-label">Categoría:</label>
                     <div class="col-sm-8">
                         <select class="form-control" id="id_categoria" name="id_categoria" required>
                             <option value="">Seleccione una categoría</option>
-                          
+
                         </select>
                     </div>
                 </div>
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="submit" class="btn btn-success">Registrar</button>
-                        <button type="reset" class="btn btn-info">Limpiar</button>
-                        <button type="button" class="btn btn-danger">Cancelar</button>
-                    </div>
+              
+             
+ 
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="submit" class="btn btn-success">Registrar</button>
+                    <button type="reset" class="btn btn-info">Limpiar</button>
+                    <button type="button" class="btn btn-danger">Cancelar</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+</div>
 <!-- FIN DE CUERPO DE PAGINA -->
-<script src="<?php echo BASE_URL; ?>view/function/products.js"></script> 
+<script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         cargarCategorias(); // Cargar categorías al iniciar la página
