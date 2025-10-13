@@ -18,7 +18,7 @@ if ($tipo == 'registrar') {
     $stock = $_POST['stock'] ?? '';
     $fecha_vencimiento = $_POST['fecha_vencimiento'] ?? '';
     $id_categoria = $_POST['id_categoria'] ?? '';
-    $id_proveedor = $_POST['id_proveedor'] ?? null; // Proveedor es opcional
+    $id_proveedor = $_POST['id_persona'] ?? ''; // Proveedor es opcional
 
     // Validar campos obligatorios (excluyendo id_proveedor)
     if ($codigo == "" || $nombre == "" || $detalle == "" || $precio == "" || $stock == "" || $fecha_vencimiento == "" || $id_categoria == "") {
@@ -118,17 +118,19 @@ if ($tipo == "actualizar_producto") {
     $nombre = $data['nombre'];
     $id_actual = $data['id_producto'];
     $id_categoria = $data['id_categoria'] ?? NULL;
+    $id_proveedor = $data['id_persona'] ?? NULL; // Agregar id_proveedor
 
     $verificar = $objProducto->buscarPorNombre($nombre);
     if ($verificar && $verificar['id'] != $id_actual) {
         echo json_encode(['status' => false, 'msg' => 'Error, producto ya existe.']);
     } else {
         // Validar si id_categoria existe
-        require_once("../model/CategoriaModel.php");
+       require_once("../model/CategoriaModel.php");
         $objCategoria = new CategoriaModel();
         if ($id_categoria && !$objCategoria->obtenerCategoriaPorId($id_categoria)) {
             echo json_encode(['status' => false, 'msg' => 'Error, la categoría no existe']);
         } else {
+           
             if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
                 $target_dir = "../Uploads/productos/";
                 if (!file_exists($target_dir)) {
@@ -142,6 +144,7 @@ if ($tipo == "actualizar_producto") {
             }
 
             $data['id_categoria'] = $id_categoria;
+            $data['id_proveedor'] = $id_proveedor; // Agregar id_proveedor
             $actualizado = $objProducto->actualizarProducto($data);
             echo json_encode(['status' => $actualizado, 'msg' => $actualizado ? 'Producto actualizado correctamente' : 'Error al actualizar']);
         }

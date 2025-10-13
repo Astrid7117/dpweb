@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esther</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/bootstrap/css/bootstrap.min.css">
+    <!-- Incluye Bootstrap Icons una sola vez (en tu <head>) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <script>
         const base_url = '<?php echo BASE_URL; ?>';
@@ -38,7 +40,10 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Clients</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>cliente">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>proveedor">Proveedor</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Shops</a>

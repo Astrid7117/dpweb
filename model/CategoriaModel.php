@@ -26,7 +26,7 @@ class CategoriaModel
         return $sql->num_rows;
     }
 
-    //
+    // ver categoria 
 
     public function verCategorias()
     {
@@ -63,7 +63,7 @@ class CategoriaModel
         $stmt->bind_param("ssi", $data['nombre'], $data['detalle'], $data['id_categoria']);
         return $stmt->execute();
     }
-
+//eliminar catecogoria
     public function eliminarCategoria($id)
     {
         $stmt = $this->conexion->prepare("DELETE FROM categoria WHERE id = ?");

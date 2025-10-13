@@ -90,25 +90,26 @@ async function obtenerCategoriaPorId(id) {
 }
 
 async function view_categories() {
-    try {
+   try {
         let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
             method: 'GET',
             mode: 'cors',
-            cache: 'no-cache',
+            cache: 'no-cache'
         });
 
         let json = await respuesta.json();
         let content_categories = document.getElementById('content_categories');
         content_categories.innerHTML = '';
 
-        json.forEach((categoria, index) => {
-            let fila = document.createElement('tr');
-            fila.classList.add('text-center');
-            fila.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${categoria.nombre || ''}</td>
-                <td>${categoria.detalle || ''}</td>
-                <td>
+        if (json.status) {
+            json.data.forEach((categoria, index) => {
+                let fila = document.createElement('tr');
+                fila.classList.add('text-center');
+                fila.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${categoria.nombre}</td>
+                    <td>${categoria.detalle}</td>
+                    <td>
                     <a href="${base_url}edit-categoria/${categoria.id}" class="btn btn-outline-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -123,9 +124,12 @@ async function view_categories() {
                 </td>
             `;
             content_categories.appendChild(fila);
-        });
+       });
+        } else {
+            Swal.fire("¡Aviso!", json.msg || "No se encontraron categorías.", "warning");
+        }
     } catch (e) {
-        console.log("Error al ver Categoría: " + e);
+        console.error("Error al ver Categoría: ", e);
         Swal.fire("¡Error!", "No se pudieron cargar las categorías.", "error");
     }
 }

@@ -1,9 +1,9 @@
+
 <!-- INICIO DE CUERPO DE PAGINA -->
     <div class="container-fluid">
         <div class="card">
-            <h5 class="card-header">Registro de Usuario</h5>
-            <form id="frm_user" action="" method="">
-                <input type="hidden" id="id_persona" name="id_persona">
+            <h5 class="card-header">Registro de Cliente</h5>
+            <form id="frm_client" action="" method="">
                 <div class="card-body">
                     <div class="mb-3 row">
                         <label for="nro_identidad" class="col-sm-4 col-form-label">Nro de Documento :</label>
@@ -62,18 +62,17 @@
                     <div class="mb-3 row">
                         <label for="rol" class="col-sm-4 col-form-label">Rol :</label>
                         <div class="col-sm-8">
-                            <select class="form-control" name="rol" id="rol" required>
-                                <option disabled selected>seleccionar rol</option>
-                                <option value="1">administrador</option>
-                                <option value="2">usuario</option>
-                                <option value="3">proveedor</option>
-                                <option value="4">almacenero</option>
+                            <select class="form-control" name="rol" id="rol" required readonly>
+                                <option value="2" selected>cliente</option>
                             </select>
+        
+                           
                         </div>
                     </div>
-                  <button type="button" class="btn btn-primary" id="btn_guardar_cambios">Guardar Cambios</button>
-                   <a href="<?=BASE_URL ?>users" type="button" class="btn btn-danger">Cancelar</a>
-                  
+                    <button type="submit" class="btn btn-success">Registrar</button>
+                    <button type="reset" class="btn btn-info">Limpiar</button>
+                    <button type="button" class="btn btn-danger">Cancelar</button>
+                     
                     
                 </div>
             </form>
@@ -81,21 +80,8 @@
     </div>
     </div>
 <!-- FIN DE CUERPO DE PAGINA -->
+<script src="<?php echo BASE_URL; ?>view/function/clients.js"></script> 
 
-
- <script src="<?php echo BASE_URL; ?>view/function/user.js"></script>
-
-<script>
-    
-document.addEventListener('DOMContentLoaded', () => {
-    let partes = window.location.pathname.split('/');
-    let id = partes[partes.length - 1];
-
-    if (!isNaN(id)) {
-        obtenerUsuarioPorId(id); // Cargar los datos si estamos editando
-    }
-});
-</script>
 
 
 

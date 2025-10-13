@@ -1,9 +1,9 @@
 <div class="container">
    <div class="mt-3" style="background-color: #87CEEB; color: white; padding: 15px; border-left: 6px solid #0d6efd; border-radius: 8px 0 0 8px;"> 
     <div class="d-flex justify-content-between align-items-center">    
-    <h4 class="mb-0">Lista de Usuarios</h4>
-          <a class="btn btn-success d-flex align-items-center" href="<?= BASE_URL ?>new-user">
-     Nuevo <i class="bi bi-plus"></i> 
+    <h4 class="mb-0">Lista de Cliente</h4>
+          <a class="btn btn-success d-flex align-items-center" href="<?= BASE_URL ?>new-cliente">
+      Nuevo <i class="bi bi-plus"></i> 
   </a>
     
     </div>
@@ -24,10 +24,12 @@
             <th>Acciones</th>
         </tr>
     </thead>
-    <tbody id="content_users">
+    <tbody id="content_clients">
 
     </tbody>
 </table>
 </div>
-<script src="<?= BASE_URL ?>view/function/user.js"></script>
+<script src="<?= BASE_URL ?>view/function/clients.js"></script>
 <!--script>view_users();</script-->
+
+

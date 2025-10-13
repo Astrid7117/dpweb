@@ -1,87 +1,3 @@
-// Función para cargar las categorías en el select
-async function cargarCategorias() {
-    try {
-        console.log("Intentando cargar categorías desde:", base_url + 'control/CategoriaController.php?tipo=ver_categorias');
-        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
-            method: 'GET',
-            mode: 'cors',
-            cache: 'no-cache',
-        });
-        if (!respuesta.ok) {
-            throw new Error(`Respuesta no OK: ${respuesta.status} - ${respuesta.statusText}`);
-        }
-        let categorias = await respuesta.json();
-        console.log("Categorías recibidas:", categorias);
-
-        let selectCategoria = document.getElementById('id_categoria');
-        if (selectCategoria) {
-            selectCategoria.innerHTML = '<option value="">Seleccione una categoría</option>';
-            if (Array.isArray(categorias) && categorias.length > 0) {
-                categorias.forEach(categoria => {
-                    let option = document.createElement('option');
-                    option.value = categoria.id; // Usamos el ID como valor
-                    option.textContent = `${categoria.id} - ${categoria.nombre}`; // Mostramos ID y nombre
-                    selectCategoria.appendChild(option);
-                });  
-            } else {
-                console.warn('No se recibieron categorías o el array está vacío');
-                selectCategoria.innerHTML += '<option value="" disabled>No hay categorías disponibles</option>';
-            }
-        } else {
-            console.error('Elemento #id_categoria no encontrado en el DOM');
-        }
-    } catch (e) {
-        console.error("Error al cargar categorías:", e);
-        Swal.fire({
-            title: "Error",
-            text: "No se pudieron cargar las categorías: " + e.message,
-            icon: "error"
-        });
-    }
-}
-
-// cargar proveedor 
-async function cargarUsuarios() {
-    try {
-        console.log("Intentando cargar usuarios desde:", base_url + 'control/UsuarioController.php?tipo=ver_usuarios');
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_usuarios', {
-            method: 'GET',
-            mode: 'cors',
-            cache: 'no-cache',
-        });
-        if (!respuesta.ok) {
-            throw new Error(`Respuesta no OK: ${respuesta.status} - ${respuesta.statusText}`);
-        }
-        let usuarios = await respuesta.json();
-        console.log("Usuarios recibidos:", usuarios);
-
-        let selectUsuario = document.getElementById('id_persona');
-        if (selectUsuario) {
-            selectUsuario.innerHTML = '<option value="">Seleccionar un proveedor</option>';
-            if (Array.isArray(usuarios) && usuarios.length > 0) {
-                usuarios.forEach(usuario => {
-                    let option = document.createElement('option');
-                    option.value = usuario.id;
-                    option.textContent = `${usuario.id} - ${usuario.nombre}`;
-                    selectUsuario.appendChild(option);
-                });
-            } else {
-                console.warn('No se recibieron usuarios o el array está vacío');
-                selectUsuario.innerHTML += '<option value="" disabled>No hay usuarios disponibles</option>';
-            }
-        } else {
-            console.error('Elemento #id_persona no encontrado en el DOM');
-        }
-    } catch (e) {
-        console.error("Error al cargar usuarios:", e);
-        Swal.fire({
-            title: "Error",
-            text: "No se pudieron cargar los usuarios: " + e.message,
-            icon: "error"
-        });
-    }
-}
-
 
 //
 function validar_form() {
@@ -114,7 +30,7 @@ function validar_form() {
         });
         return;
     }
-
+    
     if (parseInt(stock) < 0) {
         Swal.fire({
             title: "¡Error!",
@@ -132,7 +48,7 @@ function validar_form() {
         });
         return;
     }
-
+    
     if (form.dataset.edit === "true") {
         actualizarProducto();
     } else {
@@ -259,6 +175,7 @@ async function obtenerProductoPorId(id) {
             document.getElementById('stock').value = producto.stock || '';
             document.getElementById('fecha_vencimiento').value = producto.fecha_vencimiento || '';
             document.getElementById('id_categoria').value = producto.id_categoria || ''; // Asegurar asignación
+            document.getElementById('id_persona').value = producto.id_proveedor || '';
             if (producto.imagen) {
                 // Opcional: Mostrar imagen
             }
@@ -305,22 +222,21 @@ async function view_productos() {
                     <td>${producto.precio || ''}</td>
                     <td>${producto.stock || ''}</td>
                     <td>${producto.fecha_vencimiento || ''}</td>
-                    <td><img src="${producto.imagen || ''}" alt="Imagen" width="50"></td>
                     <td>${producto.categoria || ''}</td>
                     <td>
-                        <a href="${base_url}edit-producto/${producto.id}" class="btn btn-outline-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                            </svg>
-                        </a>
-                        <a href="javascript:void(0)" onclick="eliminarProducto(${producto.id})" class="btn btn-outline-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                            </svg>
-                        </a>
+                    <a href="${base_url}edit-producto/${producto.id}" class="btn btn-outline-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                    </svg>
+                    </a>
+                    <a href="javascript:void(0)" onclick="eliminarProducto(${producto.id})" class="btn btn-outline-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                    </svg>
+                    </a>
                     </td>
-                `;
+                    `;
                 content_productos.appendChild(fila);
             });
         }
@@ -356,7 +272,7 @@ async function eliminarProducto(id) {
                     mode: 'cors',
                     cache: 'no-cache'
                 });
-
+                
                 let json = await respuesta.json();
                 if (json.status) {
                     Swal.fire("Eliminado!", json.msg, "success");
@@ -371,3 +287,22 @@ async function eliminarProducto(id) {
         }
     });
 }
+// cargar categoria 
+async function cargarCategorias() {
+  let r = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias');
+  let j = await r.json();
+  let h = '<option value="">Seleccione una categoría</option>';
+  j.data.forEach(c => h += `<option value="${c.id}">${c.nombre}</option>`);
+  document.getElementById("id_categoria").innerHTML = h;
+}
+
+// cargar proveedor 
+async function cargarProveedores() {
+  let r = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores');
+  let j = await r.json();
+  let h = '<option value="">Seleccione un proveedor</option>';
+  j.data.forEach(p => h += `<option value="${p.id}">${p.razon_social}</option>`);
+  document.getElementById("id_persona").innerHTML = h;
+}
+
+

@@ -15,6 +15,8 @@ class ProductoModel
         $this->conexion = $this->conexion->connect();
     }
 
+    //
+
       public function existeCodigo($codigo)
     {
         $codigo = $this->conexion->real_escape_string($codigo);
@@ -26,6 +28,8 @@ class ProductoModel
     public function registrar($codigo, $nombre, $detalle, $precio, $stock, $fecha_vencimiento, $imagen, $id_categoria = NULL, $id_proveedor = NULL)
     {
         $stmt = $this->conexion->prepare("INSERT INTO producto (codigo, nombre, detalle, precio, stock, fecha_vencimiento, imagen, id_categoria, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // Convertir id_proveedor a NULL si es una cadena vacía
+    $id_proveedor = ($id_proveedor === '' || $id_proveedor === null) ? null : (int)$id_proveedor;
         $stmt->bind_param("ssssdssis", $codigo, $nombre, $detalle, $precio, $stock, $fecha_vencimiento, $imagen, $id_categoria, $id_proveedor);
         $sql = $stmt->execute();
         $id = $sql ? $this->conexion->insert_id : 0;
@@ -83,7 +87,7 @@ class ProductoModel
  public function actualizarProducto($data)
 {
     error_log("Datos recibidos en modelo: " . print_r($data, true));
-    $stmt = $this->conexion->prepare("UPDATE producto SET codigo = ?, nombre = ?, detalle = ?, precio = ?, stock = ?, fecha_vencimiento = ?, imagen = ?, id_categoria = ? WHERE id = ?");
+    $stmt = $this->conexion->prepare("UPDATE producto SET codigo = ?, nombre = ?, detalle = ?, precio = ?, stock = ?, fecha_vencimiento = ?, imagen = ?, id_categoria = ?, id_proveedor = ? WHERE id = ?");
     
     if ($stmt === false) {
         error_log("Error al preparar la consulta: " . $this->conexion->error);
@@ -91,8 +95,9 @@ class ProductoModel
     }
 
     $id_categoria = $data['id_categoria'] ? $data['id_categoria'] : NULL;
+    $id_proveedor = $data['id_proveedor'] ? (int)$data['id_proveedor'] : NULL; // Manejar id_proveedor
     $stmt->bind_param(
-        "ssssdssii", // Cambiado de "ssssdssi" a "ssssdssii" para incluir el tipo de id_producto
+        "ssssdssiii", // Cambiado de "ssssdssi" a "ssssdssii" para incluir el tipo de id_producto
         $data['codigo'],
         $data['nombre'],
         $data['detalle'],
@@ -101,6 +106,7 @@ class ProductoModel
         $data['fecha_vencimiento'],
         $data['imagen'],
         $id_categoria,
+        $id_proveedor,
         $data['id_producto']
     );
 

@@ -29,12 +29,16 @@ if ($tipo == 'registrar') {
 //
 
 if ($tipo == "ver_categorias") {
-    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
     $categorias = $objCategoria->verCategorias(); // Método que devuelve todas las categorías
+    $respuesta = count($categorias)
+        ? ['status' => true, 'msg' => '', 'data' => $categorias]
+        : ['status' => false, 'msg' => 'fallo el controlador'];
+
     header('Content-Type: application/json');
-    echo json_encode($categorias);
+    echo json_encode($respuesta);
     exit;
 }
+
 
 
 if ($tipo == "obtener_categoria") {

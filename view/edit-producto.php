@@ -57,6 +57,16 @@
                         </select>
                     </div>
                 </div>
+                  <div class="mb-3 row">
+                    <label for="id_persona" class="col-sm-4 col-form-label">Proveedor:</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="id_persona" name="id_persona">
+                            <option value="">Seleccionar Proveedor</option>
+                         
+                        </select>
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-end gap-2">
                     <button type="button" class="btn btn-primary" id="btn_guardar">Actualizar</button>
                     <a href="<?= BASE_URL ?>produc" type="button" class="btn btn-danger">Cancelar</a>
@@ -75,6 +85,7 @@
         let id = partes[partes.length - 1];
 
         cargarCategorias(); // Cargar categorías primero
+        cargarProveedores();
 
         if (!isNaN(id)) {
             obtenerProductoPorId(id); // Luego cargar el producto para seleccionar la categoría

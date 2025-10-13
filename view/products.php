@@ -56,17 +56,17 @@
                         </select>
                     </div>
                 </div>
-                   <div class="mb-3 row">
-                    <label for="id_proveedor" class="col-sm-4 col-form-label">Proveedor:</label>
+                <div class="mb-3 row">
+                    <label for="id_persona" class="col-sm-4 col-form-label">Proveedor:</label>
                     <div class="col-sm-8">
-                        <select class="form-control" id="id_proveedor" name="id_persona">
+                        <select class="form-control" id="id_persona" name="id_persona" required>
                             <option value="">Seleccionar Proveedor</option>
                          
                         </select>
                     </div>
                 </div>
-            
- 
+
+
                 <div class="d-flex justify-content-end gap-2">
                     <button type="submit" class="btn btn-success">Registrar</button>
                     <button type="reset" class="btn btn-info">Limpiar</button>
@@ -79,9 +79,9 @@
 <!-- FIN DE CUERPO DE PAGINA -->
 <script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        cargarCategorias(); // Cargar categorías al iniciar la página
-        cargarUsuarios();
 
-    });
+        cargarCategorias(); // Cargar categorías al iniciar la página
+        cargarProveedores();
+
+    
 </script>
