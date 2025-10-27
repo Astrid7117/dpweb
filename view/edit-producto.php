@@ -1,5 +1,5 @@
 <!-- INICIO DE CUERPO DE PAGINA -->
-<div class="container-fluid mt-4">
+<div class="container-fluid mb-0" style="position: relative; top: -80px;">
     <div class="card">
         <h5 class="card-header">Actualizar Producto</h5>
         <form id="frm_edit_produc">
@@ -45,7 +45,11 @@
                 <div class="mb-3 row">
                     <label for="imagen" class="col-sm-4 col-form-label">Imagen:</label>
                     <div class="col-sm-8">
-                        <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
+                        <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+                    <!-- Mostrar la URL de la imagen existente -->
+                        <span id="imagen_actual" class="form-text" style="display: block;">No hay imagen asignada</span>
+                        <!-- Previsualización de la imagen existente -->
+                        <img id="imagen_preview" src="" alt="Previsualización de la imagen" style="max-width: 200px; display: none; margin-top: 10px;">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -60,7 +64,7 @@
                   <div class="mb-3 row">
                     <label for="id_persona" class="col-sm-4 col-form-label">Proveedor:</label>
                     <div class="col-sm-8">
-                        <select class="form-control" id="id_persona" name="id_persona">
+                        <select class="form-control" id="id_persona" name="id_persona" required>
                             <option value="">Seleccionar Proveedor</option>
                          
                         </select>
@@ -80,15 +84,19 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        let partes = window.location.pathname.split('/');
-        let id = partes[partes.length - 1];
+   document.addEventListener('DOMContentLoaded', async () => {
+    let partes = window.location.pathname.split('/');
+    let id = partes[partes.length - 1];
 
-        cargarCategorias(); // Cargar categorías primero
-        cargarProveedores();
+    // Esperar a que se carguen las categorías y los proveedores
+    await Promise.all([
+        cargarCategorias(),
+        cargarProveedores()
+    ]);
 
-        if (!isNaN(id)) {
-            obtenerProductoPorId(id); // Luego cargar el producto para seleccionar la categoría
-        }
-    });
+    // Luego cargar los datos del producto
+    if (!isNaN(id)) {
+        await obtenerProductoPorId(id);
+    }
+});
 </script>

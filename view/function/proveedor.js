@@ -132,7 +132,7 @@ async function edit_proveedor(id) {
         document.getElementById('cod_postal').value = json.cod_postal;
         document.getElementById('direccion').value = json.direccion;
         document.getElementById('rol').value = json.rol;
-        // No es un modal, así que no se necesita $('#modalEdit').modal('show');
+       
     } catch (error) {
         console.log('Error al editar proveedor: ' + error);
         Swal.fire('Error', 'No se pudieron cargar los datos', 'error');

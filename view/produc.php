@@ -1,5 +1,5 @@
-<div class="container">
-    <div class="mt-3" style="background-color: #87CEEB; color: white; padding: 15px; border-left: 6px solid #0d6efd; border-radius: 8px 0 0 8px;"> 
+<div class="container p-0">
+    <div style="background-color: #87CEEB; color: white; padding: 15px; border-left: 6px solid #0d6efd; border-radius: 8px 0 0 8px; position: relative; top: -80px;"> 
     <div class="d-flex justify-content-between align-items-center">    
     <h4 class="mb-0">Lista de Productos</h4>
           <a class="btn btn-success d-flex align-items-center" href="<?= BASE_URL ?>products">
@@ -9,10 +9,10 @@
     </div>
     
  </div>
- <div class="d-flex justify-content-end mb-3">
-</div>
-    
-<table class="table table-bordered border-primary table-striped">
+ <div class="d-flex justify-content-end position-relative mb-0">
+
+  
+<table class="table table-bordered border-primary table-striped mb-0" style="position: relative; top: -80px;">
     <thead class="table-dark">
         <tr class="text-center">
             <th>Nro</th>
@@ -23,6 +23,7 @@
             <th>Stock</th>
             <th>Fecha Vencimiento</th>
             <th>categoria</th>
+            <th>proveedor</th>
             <th>Acciones</th>
         </tr>
     </thead>

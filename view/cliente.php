@@ -1,5 +1,5 @@
 <div class="container">
-   <div class="mt-3" style="background-color: #87CEEB; color: white; padding: 15px; border-left: 6px solid #0d6efd; border-radius: 8px 0 0 8px;"> 
+  <div style="background-color: #87CEEB; color: white; padding: 15px; border-left: 6px solid #0d6efd; border-radius: 8px 0 0 8px; position: relative; top: -80px;"> 
     <div class="d-flex justify-content-between align-items-center">    
     <h4 class="mb-0">Lista de Cliente</h4>
           <a class="btn btn-success d-flex align-items-center" href="<?= BASE_URL ?>new-cliente">
@@ -9,10 +9,10 @@
     </div>
     
  </div>
-       <div class="d-flex justify-content-end mb-3">
+       <div class="d-flex justify-content-end mb-0">
 </div>
     
-<table class="table table-bordered border-primary table-striped">
+<table class="table table-bordered border-primary table-striped mb-0" style="position: relative; top: -80px;">
     <thead class="table-dark">
         <tr class="text-center">
             <th>Nro</th>

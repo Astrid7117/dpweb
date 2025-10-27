@@ -1,4 +1,4 @@
-<div class="container-fluid mt-4">
+<div class="container-fluid mb-0" style="position: relative; top: -80px;">
     <div class="card">
         <h5 class="card-header">Editar Categoría</h5>
         <form id="frm_edit_categories">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="d-flex justify-content-end gap-2">
                     <button type="submit" class="btn btn-primary" id="btn_guardarCategoria">Actualizar</button>
-                    <a href="<?=BASE_URL ?>categories" type="button" class="btn btn-danger">Cancelar</a>
+                    <a href="<?=BASE_URL ?>categoria" type="button" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
         </form>

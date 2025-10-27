@@ -112,43 +112,121 @@ if ($tipo == 'obtener_producto') {
 
 // actualizar
 if ($tipo == "actualizar_producto") {
-    $data = $_POST;
-    error_log("Datos recibidos en controlador: " . print_r($data, true));
 
-    $nombre = $data['nombre'];
-    $id_actual = $data['id_producto'];
-    $id_categoria = $data['id_categoria'] ?? NULL;
-    $id_proveedor = $data['id_persona'] ?? NULL; // Agregar id_proveedor
+    $respuesta = array('status' => false, 'msg' => '');
+    $id_producto       = $_POST['id_producto'] ?? '';
+    $codigo            = $_POST['codigo'] ?? '';
+    $nombre            = $_POST['nombre'] ?? '';
+    $detalle           = $_POST['detalle'] ?? '';
+    $precio            = $_POST['precio'] ?? '';
+    $stock             = $_POST['stock'] ?? '';
+    $id_categoria      = $_POST['id_categoria'] ?? '';
+    $fecha_vencimiento = $_POST['fecha_vencimiento'] ?? '';
+    $id_proveedor      = $_POST['id_persona'] ?? '';
 
+    // Validar campos vacíos
+    if ($id_producto === "" || $codigo === "" || $nombre === "" || $detalle === "" || $precio === "" || $stock === "" || $id_categoria === "" || $fecha_vencimiento === "" ) {
+        $respuesta['msg'] = 'Error, campos vacíos';
+        echo json_encode($respuesta);
+        exit;
+    }
+
+    // Verificar si el producto existe
+    $producto = $objProducto->obtenerProductoPorId($id_producto);
+    if (!$producto) {
+        $respuesta['msg'] = 'Error, producto no existe en BD';
+        echo json_encode($respuesta);
+        exit;
+    }
+
+    // Verificar si otro producto tiene el mismo nombre
     $verificar = $objProducto->buscarPorNombre($nombre);
-    if ($verificar && $verificar['id'] != $id_actual) {
-        echo json_encode(['status' => false, 'msg' => 'Error, producto ya existe.']);
-    } else {
-        // Validar si id_categoria existe
-       require_once("../model/CategoriaModel.php");
-        $objCategoria = new CategoriaModel();
-        if ($id_categoria && !$objCategoria->obtenerCategoriaPorId($id_categoria)) {
-            echo json_encode(['status' => false, 'msg' => 'Error, la categoría no existe']);
-        } else {
-           
-            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
-                $target_dir = "../Uploads/productos/";
-                if (!file_exists($target_dir)) {
-                    mkdir($target_dir, 0777, true);
-                }
-                $data['imagen'] = $target_dir . basename($_FILES["imagen"]["name"]);
-                move_uploaded_file($_FILES["imagen"]["tmp_name"], $data['imagen']);
-            } else {
-                $productoActual = $objProducto->obtenerProductoPorId($id_actual);
-                $data['imagen'] = $productoActual['imagen'];
-            }
+    if ($verificar && $verificar['id'] != $id_producto) {
+        $respuesta['msg'] = 'Error, producto ya existe';
+        echo json_encode($respuesta);
+        exit;
+    }
 
-            $data['id_categoria'] = $id_categoria;
-            $data['id_proveedor'] = $id_proveedor; // Agregar id_proveedor
-            $actualizado = $objProducto->actualizarProducto($data);
-            echo json_encode(['status' => $actualizado, 'msg' => $actualizado ? 'Producto actualizado correctamente' : 'Error al actualizar']);
+    // Verificar si la categoría existe
+    require_once("../model/CategoriaModel.php");
+    $objCategoria = new CategoriaModel();
+    if (!$objCategoria->obtenerCategoriaPorId($id_categoria)) {
+        $respuesta['msg'] = 'Error, la categoría no existe';
+        echo json_encode($respuesta);
+        exit;
+    }
+
+    // Manejar imagen
+   // Manejar imagen
+    if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
+        $imagen = $producto['imagen']; // Conservar imagen actual si no se sube una nueva
+    } else {
+        // Validar formato y tamaño de la imagen
+        $file = $_FILES['imagen'];
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $extPermitidas = ['jpg', 'jpeg', 'png'];
+
+        if (!in_array($ext, $extPermitidas)) {
+            $respuesta['msg'] = 'Formato de imagen no permitido';
+            echo json_encode($respuesta);
+            exit;
+        }
+
+        if ($file['size'] > 5 * 1024 * 1024) { // 5MB
+            $respuesta['msg'] = 'La imagen supera 5MB';
+            echo json_encode($respuesta);
+            exit;
+        }
+
+        // Guardar la imagen con un nombre único
+        $carpetaUploads = "../Uploads/productos/";
+        if (!is_dir($carpetaUploads)) {
+            @mkdir($carpetaUploads, 0775, true);
+        }
+
+        $nombreUnico = uniqid('prod_') . '.' . $ext;
+        $rutaFisica = $carpetaUploads . $nombreUnico;
+        $imagen = "Uploads/productos/" . $nombreUnico;
+
+        if (!move_uploaded_file($file['tmp_name'], $rutaFisica)) {
+            $respuesta['msg'] = 'No se pudo guardar la imagen';
+            echo json_encode($respuesta);
+            exit;
+        }
+
+        // Opcional: Eliminar la imagen anterior si existe y no es la misma
+        if (!empty($producto['imagen']) && file_exists("../" . $producto['imagen'])) {
+            @unlink("../" . $producto['imagen']);
         }
     }
+
+    // Actualizar producto
+    $actualizar = $objProducto->actualizarProducto([
+        'id_producto'       => $id_producto,
+        'codigo'            => $codigo,
+        'nombre'            => $nombre,
+        'detalle'           => $detalle,
+        'precio'            => $precio,
+        'stock'             => $stock,
+        'id_categoria'      => $id_categoria,
+        'fecha_vencimiento' => $fecha_vencimiento,
+        'id_proveedor'      => $id_proveedor,
+        'imagen'            => $imagen
+    ]);
+
+    if ($actualizar) {
+        $respuesta['status'] = true;
+        $respuesta['msg'] = 'Producto actualizado correctamente';
+    } else {
+        // Revertir la subida de la imagen si falla la actualización
+        if (isset($rutaFisica) && file_exists($rutaFisica)) {
+            @unlink($rutaFisica);
+        }
+        $respuesta['msg'] = 'Error al actualizar el producto';
+    }
+
+    echo json_encode($respuesta);
+    exit;
 }
 
 // eliminar producto 

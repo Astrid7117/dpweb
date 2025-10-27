@@ -1,6 +1,6 @@
 
     <!-- INICIO DE CUERPO DE PAGINA -->
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mb-0" style="position: relative; top: -80px;">
         <div class="card">
             <h5 class="card-header">Registrar Categoría</h5>
             <form id="frm_categories">

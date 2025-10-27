@@ -1,6 +1,6 @@
 
 <!-- INICIO DE CUERPO DE PAGINA -->
-    <div class="container-fluid">
+    <div class="container-fluid mb-0" style="margin-top: -60px;">
         <div class="card">
             <h5 class="card-header">Registro de Proveeddor</h5>
             <form id="frm_proveedor" action="" method="">
@@ -73,7 +73,7 @@
                     </div>
                     <button type="submit" class="btn btn-success">Registrar</button>
                     <button type="reset" class="btn btn-info">Limpiar</button>
-                    <button type="button" class="btn btn-danger">Cancelar</button>
+                     <a href="<?=BASE_URL ?>proveedor" type="button" class="btn btn-danger">Cancelar</a>
                      
                     
                 </div>
