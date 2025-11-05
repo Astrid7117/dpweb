@@ -7,7 +7,7 @@
     <title>Esther</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/bootstrap/css/bootstrap.min.css">
     <!-- Incluye Bootstrap Icons una sola vez (en tu <head>) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <script>
         const base_url = '<?php echo BASE_URL; ?>';
@@ -71,6 +71,7 @@
         #menuToggleSidebar:hover {
             color: #e0d4ff;
         }
+
         /* AÑADIDO: Estilos del botón hamburguesa para sidebar */
 
         /* === SIDEBAR === */
@@ -165,6 +166,7 @@
                 width: 250px;
                 left: -250px;
             }
+
             .main-content {
                 padding: 80px 20px 20px;
             }
@@ -188,6 +190,7 @@
     </style>
 
 </head>
+
 <body>
 
     <!-- Overlay (fondo oscuro al abrir sidebar) -->
@@ -231,6 +234,11 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<?= BASE_URL ?>vista-cliente">
+                    <i class="bi bi-shop"></i> vista cliente
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="bi bi-shop"></i> Tiendas
                 </a>
@@ -246,7 +254,7 @@
 
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-             <!-- BOTÓN HAMBURGUESA PARA ABRIR SIDEBAR -->
+            <!-- BOTÓN HAMBURGUESA PARA ABRIR SIDEBAR -->
             <button id="menuToggleSidebar" class="me-2">
                 <i class="bi bi-list"></i>
             </button>
@@ -277,6 +285,11 @@
                         <a class="nav-link" href="<?= BASE_URL ?>proveedor">Proveedor</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>vista-cliente">
+                            <i class="bi bi-shop"></i> vista cliente
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">Shops</a>
                     </li>
                     <li class="nav-item">
@@ -304,6 +317,6 @@
         </div>
     </nav>
 
-     <!-- Contenedor principal para el contenido de cada vista -->
+    <!-- Contenedor principal para el contenido de cada vista -->
     <main class="main-content" id="mainContent">
-    <!-- AÑADIDO: <main> para que el contenido comience aquí -->
+        <!-- AÑADIDO: <main> para que el contenido comience aquí -->
