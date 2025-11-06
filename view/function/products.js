@@ -90,6 +90,14 @@ async function registrarProducto() {
                 draggable: true
             });
             document.getElementById('frm_produc').reset();
+            // Limpiar la imagen
+            const imagenActual = document.getElementById('imagen_actual');
+            const imagenPreview = document.getElementById('imagen_preview');
+            if (imagenActual) imagenActual.textContent = 'No hay imagen seleccionada';
+            if (imagenPreview) {
+                imagenPreview.style.display = 'none';
+                imagenPreview.src = '';
+            }
         } else {
             Swal.fire({
                 title: json.msg,
@@ -307,7 +315,7 @@ async function cargarCategorias() {
   document.getElementById("id_categoria").innerHTML = h;
 }
 
-// cargar proveedor 
+// cargar proveedor
 async function cargarProveedores() {
   let r = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores');
   let j = await r.json();
@@ -315,5 +323,25 @@ async function cargarProveedores() {
   j.data.forEach(p => h += `<option value="${p.id}">${p.razon_social}</option>`);
   document.getElementById("id_persona").innerHTML = h;
 }
+
+// Event listener para previsualización de imagen en agregar y editar producto
+document.getElementById('imagen').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const imagenActual = document.getElementById('imagen_actual');
+    const imagenPreview = document.getElementById('imagen_preview');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imagenPreview.src = e.target.result;
+            imagenPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+        imagenActual.textContent = file.name;
+    } else {
+        imagenPreview.style.display = 'none';
+        imagenActual.textContent = 'No hay imagen seleccionada';
+    }
+});
 
 

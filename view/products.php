@@ -45,6 +45,10 @@
                     <label for="imagen" class="col-sm-4 col-form-label">Imagen:</label>
                     <div class="col-sm-8">
                         <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
+                        <!-- Mostrar el nombre de la imagen seleccionada -->
+                        <span id="imagen_actual" class="form-text" style="display: block;">No hay imagen seleccionada</span>
+                        <!-- Previsualización de la imagen -->
+                        <img id="imagen_preview" src="" alt="Previsualización de la imagen" style="max-width: 200px; display: none; margin-top: 10px;">
                     </div>
                 </div>
                 <div class="mb-3 row">
