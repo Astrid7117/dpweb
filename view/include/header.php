@@ -9,7 +9,9 @@
     <!-- Incluye Bootstrap Icons una sola vez (en tu <head>) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/estilos/header.css">
-    <script>
+   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+   <script>
         const base_url = '<?php echo BASE_URL; ?>';
     </script>
     

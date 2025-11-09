@@ -38,8 +38,8 @@ async function cargarProductos() {
                             <div class="producto-categoria">Categoría: ${producto.categoria || 'Sin categoría'}</div>
                             <div class="producto-precio">Precio: S/ ${parseFloat(producto.precio).toFixed(2)}</div>
                             <div class="botones">
-                                <button class="btn-ver-detalles">Ver Detalles</button>
-                                <button class="btn-anadir-carrito">Añadir a Carrito</button>
+                                <button class="btn-ver-detalles"><i class="bi bi-info-circle"></i>Ver Detalles</button>
+                                <button class="btn-anadir-carrito"><i class="bi bi-cart4"></i>Añadir a Carrito</button>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,23 @@
+
+body {
+   /* background-image: url('https://i.pinimg.com/736x/1a/6c/51/1a6c51121ba455e254888c8a76b20ab3.jpg');*/
+   background: linear-gradient(to right, #764ba2, #667eea);
+   background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: 'Poppins', sans-serif;
+}
+.text-center {
+    color: #000000;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 500;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+
+
 /* Estilos para las tarjetas de productos */
 .producto-card {
     border: none;
@@ -61,7 +81,7 @@
 }
 
 .producto-card:hover .producto-nombre {
-    color: #667eea;
+    color: #f7e22bfa;
 }
 
 .producto-categoria {
@@ -80,7 +100,7 @@
 .producto-precio {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #04913a;
+    color: #000000;
     margin-top: 12px;
 }
 

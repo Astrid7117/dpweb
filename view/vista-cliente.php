@@ -1,3 +1,4 @@
+<body>
 <!-- INICIO DE CUERPO DE PAGINA -->
 <div class="container-fluid mb-0" style="position: relative; top: -80px;">
     <div class="row">
@@ -31,3 +32,4 @@
 <!-- FIN DE CUERPO DE PAGINA -->
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/estilos/vistaC.css">
 <script src="<?php echo BASE_URL; ?>view/function/vistaC.js"></script>
+</body>
