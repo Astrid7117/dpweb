@@ -315,3 +315,124 @@ body {
         font-size: 1rem;
     }
 }
+
+/* CARRITO DE COMPRAS FIJO AL COSTADO */
+.col-12.col-lg-3.position-sticky {
+   /* background: #f8f9fa;*/
+    transition: all 0.3s ease;
+}
+
+/* Contenedor del carrito */
+.bg-white.shadow-lg.rounded-3.p-4.h-100 {
+    border-radius: 1rem !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+/* Título del carrito */
+#lista-carrito h4 {
+    font-size: 1.4rem;
+    color: #198754;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Contador de productos */
+#contador-carrito {
+    background: #198754 !important;
+    padding: 0.4em 0.8em;
+    font-weight: bold;
+}
+
+/* Línea separadora */
+hr.text-success {
+    opacity: 0.2;
+}
+
+/* Lista de productos */
+#lista-carrito {
+    max-height: 60vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #198754 #e9ecef;
+}
+
+/* Scrollbar para navegadores WebKit */
+#lista-carrito::-webkit-scrollbar {
+    width: 8px;
+}
+
+#lista-carrito::-webkit-scrollbar-thumb {
+    background-color: #198754;
+    border-radius: 10px;
+}
+
+#lista-carrito::-webkit-scrollbar-track {
+    background: #e9ecef;
+}
+
+/* Mensaje cuando está vacío */
+#lista-carrito .text-muted {
+    color: #6c757d !important;
+    font-size: 0.95rem;
+}
+
+/* Subtotal, envío y total */
+.border-top.pt-3 strong {
+    font-weight: 600;
+}
+
+/* Total destacado */
+#total-carrito {
+    font-size: 1.3rem;
+    color: #198754;
+}
+
+/* Botón de pago */
+#btn-proceder-pago {
+    background: #198754;
+    border: none;
+    color: white;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+#btn-proceder-pago:hover {
+    background: #157347;
+    transform: translateY(-2px);
+}
+
+#btn-proceder-pago:disabled {
+    background: #a8d5b5;
+    cursor: not-allowed;
+}
+
+/* Botón de vaciar */
+#btn-vaciar-carrito {
+    border: 2px solid #dc3545;
+    color: #dc3545;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#btn-vaciar-carrito:hover {
+    background: #dc3545;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Animación suave al agregar productos */
+#lista-carrito .producto-agregado {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

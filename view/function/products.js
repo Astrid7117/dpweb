@@ -192,7 +192,7 @@ async function obtenerProductoPorId(id) {
                 imagenActual.textContent = producto.imagen;
             } else if (imagenActual) {
                 imagenActual.textContent = 'No hay imagen asignada';
-            }
+            }       
             
             // Mostrar previsualización de la imagen (opcional)
             const imagenPreview = document.getElementById('imagen_preview');
