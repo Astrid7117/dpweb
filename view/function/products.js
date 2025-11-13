@@ -12,7 +12,7 @@ function validar_form() {
     //let imagen = document.getElementById("imagen").value;
     let id_categoria = document.getElementById("id_categoria").value;
 
-    if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || fecha_vencimiento == "" || id_categoria == "" ) {
+    if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || fecha_vencimiento == "" || id_categoria == "") {
         Swal.fire({
             title: "ERROR",
             text: "¡Ups! Hay campos vacíos.",
@@ -30,7 +30,7 @@ function validar_form() {
         });
         return;
     }
-    
+
     if (parseInt(stock) < 0) {
         Swal.fire({
             title: "¡Error!",
@@ -48,7 +48,7 @@ function validar_form() {
         });
         return;
     }
-    
+
     if (form.dataset.edit === "true") {
         actualizarProducto();
     } else {
@@ -149,11 +149,11 @@ async function actualizarProducto() {
                 title: json.msg,
                 icon: "success",
                 draggable: true
-               }).then(() => {
-        // Redirigir después de cerrar el alert
-        location.href = base_url + 'produc';
-        // view_productos(); // Solo si quieres actualizar sin recargar
-    });
+            }).then(() => {
+                // Redirigir después de cerrar el alert
+                location.href = base_url + 'produc';
+                // view_productos(); // Solo si quieres actualizar sin recargar
+            });
         } else {
             Swal.fire({
                 title: json.msg,
@@ -186,14 +186,14 @@ async function obtenerProductoPorId(id) {
             document.getElementById('fecha_vencimiento').value = producto.fecha_vencimiento || '';
             document.getElementById('id_categoria').value = producto.id_categoria || ''; // Asegurar asignación
             document.getElementById('id_persona').value = producto.id_proveedor || '';
-           // Mostrar la URL de la imagen existente
+            // Mostrar la URL de la imagen existente
             const imagenActual = document.getElementById('imagen_actual');
             if (imagenActual && producto.imagen) {
                 imagenActual.textContent = producto.imagen;
             } else if (imagenActual) {
                 imagenActual.textContent = 'No hay imagen asignada';
-            }       
-            
+            }
+
             // Mostrar previsualización de la imagen (opcional)
             const imagenPreview = document.getElementById('imagen_preview');
             if (imagenPreview && producto.imagen) {
@@ -247,6 +247,7 @@ async function view_productos() {
                     <td>${producto.fecha_vencimiento || ''}</td>
                     <td>${producto.categoria || ''}</td>
                     <td>${producto.proveedor || 'Sin proveedor'}</td>
+                    <td><svg id="barcode${producto.id}"></svg></td>
                     <td>
                     <a href="${base_url}edit-producto/${producto.id}" class="btn btn-outline-primary">
                      <i class="bi bi-pencil-square"></i>
@@ -257,7 +258,25 @@ async function view_productos() {
                     </td>
                     `;
                 content_productos.appendChild(fila);
+                 JsBarcode("#barcode" + producto.id, ""+producto.codigo,{
+                    
+                    
+                      lineColor: "rgba(125, 69, 177, 1)",
+                      width: 2,
+                      height: 25,
+                   
+                 });
+                /*  JsBarcode("#barcode" + producto.id, "1234", {
+                      format: "pharmacode",
+                      lineColor: "rgba(166, 82, 245, 1)",
+                      width: 4,
+                      height: 40,
+                      displayValue: false,
+                    
+                  });*/
+              //  JsBarcode(".barcode" + producto.id).init();
             });
+
         }
     } catch (e) {
         console.error("Error al ver productos:", e);
@@ -291,7 +310,7 @@ async function eliminarProducto(id) {
                     mode: 'cors',
                     cache: 'no-cache'
                 });
-                
+
                 let json = await respuesta.json();
                 if (json.status) {
                     Swal.fire("Eliminado!", json.msg, "success");
@@ -308,31 +327,31 @@ async function eliminarProducto(id) {
 }
 // cargar categoria 
 async function cargarCategorias() {
-  let r = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias');
-  let j = await r.json();
-  let h = '<option value="">Seleccione una categoría</option>';
-  j.data.forEach(c => h += `<option value="${c.id}">${c.nombre}</option>`);
-  document.getElementById("id_categoria").innerHTML = h;
+    let r = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias');
+    let j = await r.json();
+    let h = '<option value="">Seleccione una categoría</option>';
+    j.data.forEach(c => h += `<option value="${c.id}">${c.nombre}</option>`);
+    document.getElementById("id_categoria").innerHTML = h;
 }
 
 // cargar proveedor
 async function cargarProveedores() {
-  let r = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores');
-  let j = await r.json();
-  let h = '<option value="">Seleccione un proveedor</option>';
-  j.data.forEach(p => h += `<option value="${p.id}">${p.razon_social}</option>`);
-  document.getElementById("id_persona").innerHTML = h;
+    let r = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores');
+    let j = await r.json();
+    let h = '<option value="">Seleccione un proveedor</option>';
+    j.data.forEach(p => h += `<option value="${p.id}">${p.razon_social}</option>`);
+    document.getElementById("id_persona").innerHTML = h;
 }
 
 // Event listener para previsualización de imagen en agregar y editar producto
-document.getElementById('imagen').addEventListener('change', function(event) {
+document.getElementById('imagen').addEventListener('change', function (event) {
     const file = event.target.files[0];
     const imagenActual = document.getElementById('imagen_actual');
     const imagenPreview = document.getElementById('imagen_preview');
 
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             imagenPreview.src = e.target.result;
             imagenPreview.style.display = 'block';
         };
