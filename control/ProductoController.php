@@ -156,7 +156,7 @@ if ($tipo == "actualizar_producto") {
         exit;
     }
 
-    // Manejar imagen
+   
    // Manejar imagen
     if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
         $imagen = $producto['imagen']; // Conservar imagen actual si no se sube una nueva
@@ -234,4 +234,19 @@ if ($tipo == "eliminar_producto") {
     $id = $_GET['id'] ?? 0;
     $result = $objProducto->eliminarProducto($id);
     echo json_encode($result);
+}
+
+// buscador por codigo y nombre 
+if ($tipo == "buscar_Producto_venta") {
+    $dato = $_POST['dato'] ?? '';
+    $productos = $objProducto->buscarProductoByNombreOrCodigo($dato);
+    if (count($productos) > 0) {
+        $respuesta = array( 'status' => true,  'msg'    => '','data'   => $productos   // Ya viene con categoría incluida
+        );
+    } else {
+        $respuesta = array( 'status' => false,  'msg'    => 'No se encontraron productos' );
+    }
+    header('Content-Type: application/json');
+    echo json_encode($respuesta);
+    exit;
 }

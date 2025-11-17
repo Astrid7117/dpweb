@@ -2,10 +2,21 @@
     <!-- INICIO DE CUERPO DE PAGINA -->
     <div class="container-fluid mb-0" style="position: relative; top: -80px;">
         <div class="row">
-            
+
             <!-- PRODUCTOS PRINCIPALES -->
             <div class="col-12 col-lg-9">
-               
+
+                <!-- BUSCADOR DE PRODUCTOS -->
+                <div class="row mb-4">
+                    <div class="col-12 col-md-6 mx-auto">
+                        <div class="input-group shadow-sm">
+                            
+                           </span>
+                            <input type="text" id="busqueda_venta" class="form-control" placeholder="Buscar productos" onkeyup="view_productos();">
+                        </div>
+                    </div>
+                </div>
+
                 <h2 class="text-center mb-4">Productos Destacados</h2>
                 <!-- Carousel de productos destacados -->
                 <div id="productos-carousel" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="3000">
@@ -40,62 +51,62 @@
                     </div>
                     <hr class="text-success">
 
-                   <div id="lista-carrito" class="mb-4" style="max-height: 58vh; overflow-y: auto;">
-            <div class="table-responsive">
-                <table class="table table-sm table-hover align-middle">
-                    <thead class="table-success text-dark">
-                        <tr>
-                            <th>Producto</th>
-                            <th class="text-center">Cantidad</th>
-                            <th class="text-end">Precio</th>
-                            <th class="text-end">Total</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-productos">
-                        <!-- PRODUCTO 1 -->
-                        <tr>
-                            <td class="fw-bold">Azúcar</td>
-                            <td class="text-center">
-                                <div class="btn-group btn-group-sm">
-                                    <button class="btn btn-outline-secondary restar" data-index="0">-</button>
-                                    <span class="btn btn-light cantidad px-3">2</span>
-                                    <button class="btn btn-outline-secondary sumar" data-index="0">+</button>
-                                </div>
-                            </td>
-                            <td class="text-end">S/ 2.00</td>
-                            <td class="text-end fw-bold text-success subtotal-item">S/ 4.00</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-danger eliminar" data-index="0" title="Eliminar">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
+                    <div id="lista-carrito" class="mb-4" style="max-height: 58vh; overflow-y: auto;">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover align-middle">
+                                <thead class="table-success text-dark">
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th class="text-center">Cantidad</th>
+                                        <th class="text-end">Precio</th>
+                                        <th class="text-end">Total</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-productos">
+                                    <!-- PRODUCTO 1 -->
+                                    <tr>
+                                        <td class="fw-bold">Azúcar</td>
+                                        <td class="text-center">
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-secondary restar" data-index="0">-</button>
+                                                <span class="btn btn-light cantidad px-3">2</span>
+                                                <button class="btn btn-outline-secondary sumar" data-index="0">+</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">S/ 2.00</td>
+                                        <td class="text-end fw-bold text-success subtotal-item">S/ 4.00</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-danger eliminar" data-index="0" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
 
-                        <!-- PRODUCTO 2 -->
-                        <tr>
-                            <td class="fw-bold">Agua Cielo</td>
-                            <td class="text-center">
-                                <div class="btn-group btn-group-sm">
-                                    <button class="btn btn-outline-secondary restar" data-index="1">-</button>
-                                    <span class="btn btn-light cantidad px-3">1</span>
-                                    <button class="btn btn-outline-secondary sumar" data-index="1">+</button>
-                                </div>
-                            </td>
-                            <td class="text-end">S/ 4.00</td>
-                            <td class="text-end fw-bold text-success subtotal-item">S/ 4.00</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-danger eliminar" data-index="1" title="Eliminar">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                                    <!-- PRODUCTO 2 -->
+                                    <tr>
+                                        <td class="fw-bold">Agua Cielo</td>
+                                        <td class="text-center">
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-secondary restar" data-index="1">-</button>
+                                                <span class="btn btn-light cantidad px-3">1</span>
+                                                <button class="btn btn-outline-secondary sumar" data-index="1">+</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">S/ 4.00</td>
+                                        <td class="text-end fw-bold text-success subtotal-item">S/ 4.00</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-danger eliminar" data-index="1" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                  <div class="border-top pt-3">
+                    <div class="border-top pt-3">
                         <div class="d-flex justify-content-between mb-2">
                             <strong>Subtotal:</strong>
                             <span id="subtotal-carrito">S/ 0.00</span>
@@ -111,14 +122,7 @@
 
                     </div>
 
-                 <!--     <div class="row">
-                        <div class="col-12 text-end" >
-                        <h4>Subtotal: <label id=""> </h4>
-                        <h4>IGV: <label id=""> </h4>
-                        <h4>Total: <label id=""> </h4>
-                        <button class="btn btn-success">Realizar ventas </button>
-                        </div>
-                    </div>-->
+                  
                 </div>
             </div>
         </div>
@@ -126,5 +130,6 @@
     <!-- FIN DE CUERPO DE PAGINA -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/estilos/vistaC.css">
     <script src="<?php echo BASE_URL; ?>view/function/vistaC.js"></script>
-     <script src="<?php echo BASE_URL; ?>view/function/venta.js"></script>
+     <script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
+    <script src="<?php echo BASE_URL; ?>view/function/venta.js"></script>
 </body>

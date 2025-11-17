@@ -1,19 +1,24 @@
-document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function () {
     cargarProductos();
 });
 
 async function cargarProductos() {
     try {
-        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver_productos', {
+       //let dato = document.getElementById('busqueda_venta').value;
+       // const datos = new FormData();
+        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=buscar_Producto_venta', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
+            //body: datos
         });
 
-        let json = await respuesta.json();
+        let res = await respuesta.json();
+        let json = res.data;
         console.log("Productos recibidos:", json);
 
-        // Cargar carousel de productos destacados (primeros 3 productos)
+        // Cargar carousel de productos destacados 
         cargarCarousel(json.slice(0, 3));
 
         let container = document.getElementById('productos-container');
@@ -24,7 +29,7 @@ async function cargarProductos() {
                 container.innerHTML = '<div class="col-12"><p class="text-center">No hay productos disponibles.</p></div>';
                 return;
             }
-
+           // contenido.innerHTML = ``;
             json.forEach(producto => {
                 let imagenSrc = producto.imagen ? base_url + producto.imagen : 'https://via.placeholder.com/300x200?text=Sin+Imagen';
 
@@ -96,3 +101,7 @@ function cargarCarousel(productos) {
         carouselInner.appendChild(item);
     });
 }
+
+
+
+

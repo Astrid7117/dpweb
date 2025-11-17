@@ -223,10 +223,14 @@ async function obtenerProductoPorId(id) {
 
 async function view_productos() {
     try {
+        let dato = document.getElementById('busqueda_venta').value;
+        const datos = new FormData();
+        datos.append('datos', dato);
         let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver_productos', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
+            body: datos
         });
 
         let json = await respuesta.json();
@@ -234,6 +238,7 @@ async function view_productos() {
         let content_productos = document.getElementById('content_productos');
         if (content_productos) {
             content_productos.innerHTML = '';
+          contenidot.innerHTML = ``;
             json.forEach((producto, index) => {
                 let fila = document.createElement('tr');
                 fila.classList.add('text-center');
@@ -362,5 +367,8 @@ document.getElementById('imagen').addEventListener('change', function (event) {
         imagenActual.textContent = 'No hay imagen seleccionada';
     }
 });
+
+
+
 
 
