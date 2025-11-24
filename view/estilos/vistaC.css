@@ -167,16 +167,17 @@ body {
 
 /* Estilos para el carousel */
 #productos-carousel {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     border-radius: 15px;
     overflow: hidden;
 }
 
 .producto-imagen-carousel-full {
-    height: 400px;
+    height: 800px;
     object-fit: contain;
     background-color: #f8f9fa;
+    height: 1000px;
 }
 
 .producto-info-carousel-full {

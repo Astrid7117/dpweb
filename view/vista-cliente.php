@@ -12,7 +12,7 @@
                         <div class="input-group shadow-sm">
                             
                            </span>
-                            <input type="text" id="busqueda_venta" class="form-control" placeholder="Buscar productos" onkeyup="view_productos();">
+                            <input type="text" id="busqueda_venta" class="form-control" placeholder="Buscar productos" onkeyup=" listar_productos_venta();">
                         </div>
                     </div>
                 </div>
