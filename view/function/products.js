@@ -263,6 +263,7 @@ async function view_productos() {
                     </td>
                     `;
                 content_productos.appendChild(fila);
+                
                  JsBarcode("#barcode" + producto.id, ""+producto.codigo,{
                     
                     

@@ -12,7 +12,10 @@
                         <div class="input-group shadow-sm">
                             
                            </span>
-                            <input type="text" id="busqueda_venta" class="form-control" placeholder="Buscar productos" onkeyup=" listar_productos_venta();">
+                            <input type="text" id="busqueda_venta" class="form-control" placeholder="Buscar productos" onkeyup="cargarProductos();">
+                            <input type="hidden" id="id_producto_venta">
+                              <input type="hidden" id="producto_precio_venta">
+                                <input type="hidden" id="producto_cantidad_venta" value="1">
                         </div>
                     </div>
                 </div>
@@ -132,4 +135,12 @@
     <script src="<?php echo BASE_URL; ?>view/function/vistaC.js"></script>
      <script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
     <script src="<?php echo BASE_URL; ?>view/function/venta.js"></script>
+    <script>
+        let input = document.getElementById("busqueda_venta");
+        input.addEventListener('keydown', (event)=>{
+            if (event.key == 'Enter') {
+                agregar_producto_temporal();
+            }
+        })
+    </script>
 </body>

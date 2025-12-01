@@ -81,6 +81,12 @@ async function cargarProductos(buscar = '') {
                 </div>
             `;
             container.appendChild(card);
+           let id = document.getElementById('id_producto_venta');
+    let precio = document.getElementById('producto_precio_venta');
+    let cantidad = document.getElementById('producto_cantidad_venta');
+    id.value=producto.id;
+    precio.value =producto.precio;
+    cantidad.value =1;
         });
 
     } catch (e) {
@@ -112,6 +118,7 @@ function cargarCarousel(productos) {
             indicator.ariaCurrent = 'true';
         }
         carouselIndicators.appendChild(indicator);
+   
 
         // Item del carousel
         const imagenSrc = producto.imagen 
