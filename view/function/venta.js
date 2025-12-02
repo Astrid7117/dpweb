@@ -25,7 +25,7 @@ async function agregar_producto_temporal() {
     datos.append('precio', precio);
     datos.append('cantidad', cantidad);
     try {
-        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registar_temporal', {
+        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrarTemporal', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -34,9 +34,9 @@ async function agregar_producto_temporal() {
         json = await respuesta.json();
         if (json.status) {
             if (json.msg == "registrado") {
-                alert("el producto fue registrado")
+                alert("el producto fue registrado");
             } else {
-                alert("el producto fue actualizado")
+                alert("el producto fue actualizado");
             }
         }
     } catch (error) {

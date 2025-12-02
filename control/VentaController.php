@@ -2,11 +2,11 @@
 require_once("../model/VentaModel.php");
 require_once("../model/ProductoModel.php");
 
-$objVenta = new VentaModel();
 $objProducto= new ProductoModel();
+$objVenta = new VentaModel();
 $tipo = $_GET['tipo'];
 
-if ($tipo == "registar_temporal") {
+if ($tipo == "registrarTemporal") {
       $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
     $id_producto = $_POST['id_producto'];
     $precio = $_POST['precio'];
@@ -21,7 +21,7 @@ if ($tipo == "registar_temporal") {
         $respuesta = array('status' => true, 'msg' => 'actualizado');
         
     }else {
-        $registro = $objVenta->registar_temporal($id_producto, $precio, $cantidad);
+        $registro = $objVenta->registrar_temporal($id_producto, $precio, $cantidad);
         $respuesta = array('status' => true, 'msg' => 'registrado');
     }
   echo json_encode($respuesta);
