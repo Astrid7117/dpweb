@@ -41,58 +41,7 @@
 </head>
 <body class="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 font-sans">
 
-  <!-- Header -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
-    <div class="px-4 sm:px-6 py-4">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-4">
-          <button id="menu-toggle" class="lg:hidden p-2 hover:bg-gray-100 rounded-xl transition-colors">
-            <i data-lucide="menu" class="w-5 h-5 text-gray-600"></i>
-          </button>
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
-              <i data-lucide="shopping-cart" class="w-5 h-5 text-white"></i>
-            </div>
-            <div>
-              <h1 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                VentasPro
-              </h1>
-              <p class="text-xs text-gray-500">Sistema de Gestión</p>
-            </div>
-          </div>
-        </div>
 
-        <div class="flex items-center gap-3">
-          <div class="relative hidden md:block">
-            <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></i>
-            <input
-              type="text"
-              id="search-input"
-              placeholder="Buscar productos, clientes..."
-              class="pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl w-64 lg:w-80 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-            />
-          </div>
-
-          <button class="relative p-2 hover:bg-gray-100 rounded-xl transition-colors">
-            <i data-lucide="bell" class="w-5 h-5 text-gray-600"></i>
-            <span class="absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full animate-pulse"></span>
-          </button>
-
-          <div class="flex items-center gap-3 pl-3 border-l border-gray-200">
-            <img
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
-              alt="Usuario"
-              class="w-9 h-9 rounded-full ring-2 ring-purple-100"
-            />
-            <div class="hidden md:block">
-              <p class="text-sm font-semibold text-gray-800">Admin</p>
-              <p class="text-xs text-gray-500">Administrador</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
 
   <!-- Mobile Sidebar -->
   <div id="mobile-sidebar" class="fixed inset-0 z-40 hidden lg:hidden">
@@ -106,7 +55,7 @@
       </div>
       <nav class="space-y-2">
         <button onclick="setActiveTab('overview')" class="w-full text-left px-4 py-3 rounded-lg transition-colors capitalize bg-purple-100 text-purple-700 font-medium">Resumen</button>
-        <button onclick="setActiveTab('ventas')" class="w-full text-left px-4 py-3 rounded-lg transition-colors capitalize text-gray-600 hover:bg-gray-50">Ventas</button>
+        <a href="vista-cliente.php" onclick="setActiveTab('ventas')" class="w-full text-left px-4 py-3 rounded-lg transition-colors capitalize text-gray-600 hover:bg-gray-50">Ventas</a>
         <button onclick="setActiveTab('productos')" class="w-full text-left px-4 py-3 rounded-lg transition-colors capitalize text-gray-600 hover:bg-gray-50">Productos</button>
         <button onclick="setActiveTab('clientes')" class="w-full text-left px-4 py-3 rounded-lg transition-colors capitalize text-gray-600 hover:bg-gray-50">Clientes</button>
         <button onclick="setActiveTab('reportes')" class="w-full text-left px-4 py-3 rounded-lg transition-colors capitalize text-gray-600 hover:bg-gray-50">Reportes</button>
@@ -117,14 +66,7 @@
   <!-- Main Content -->
   <main class="p-4 sm:p-6 max-w-7xl mx-auto">
     <!-- Desktop Tabs -->
-    <div class="hidden lg:flex items-center gap-1 mb-6 bg-gray-100 p-1 rounded-xl w-fit">
-      <button onclick="setActiveTab('overview')" class="px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize bg-white text-purple-700 shadow-sm">Resumen</button>
-      <button onclick="setActiveTab('ventas')" class="px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize text-gray-600 hover:text-gray-800">Ventas</button>
-      <button onclick="setActiveTab('productos')" class="px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize text-gray-600 hover:text-gray-800">Productos</button>
-      <button onclick="setActiveTab('clientes')" class="px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize text-gray-600 hover:text-gray-800">Clientes</button>
-      <button onclick="setActiveTab('reportes')" class="px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize text-gray-600 hover:text-gray-800">Reportes</button>
-    </div>
-
+  
     <!-- Welcome -->
     <div class="mb-8">
       <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">¡Bienvenido de nuevo!</h2>
@@ -401,28 +343,6 @@
       </div>
     </div>
 
-    <!-- Sales Performance Bar Chart -->
-    <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-        <div>
-          <h3 class="text-lg font-bold text-gray-800">Rendimiento de Ventas</h3>
-          <p class="text-sm text-gray-500">Comparativa de ventas y órdenes</p>
-        </div>
-        <div class="flex gap-4 flex-wrap">
-          <div class="flex items-center gap-2">
-            <div class="w-3 h-3 rounded-full bg-purple-500"></div>
-            <span class="text-sm text-gray-600">Ventas</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="w-3 h-3 rounded-full bg-pink-500"></div>
-            <span class="text-sm text-gray-600">Órdenes</span>
-          </div>
-        </div>
-      </div>
-      <div class="chart-container">
-        <canvas id="salesChart"></canvas>
-      </div>
-    </div>
   </main>
 
   <!-- Footer -->
@@ -430,12 +350,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
         <p>© 2025 VentasPro. Todos los derechos reservados.</p>
-        <div class="flex gap-6">
-          <a href="#" class="hover:text-purple-600 transition-colors">Soporte</a>
-          <a href="#" class="hover:text-purple-600 transition-colors">Documentación</a>
-          <a href="#" class="hover:text-purple-600 transition-colors">Términos</a>
-          <a href="#" class="hover:text-purple-600 transition-colors">Privacidad</a>
-        </div>
+      
       </div>
     </div>
   </footer>
