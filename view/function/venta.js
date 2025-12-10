@@ -44,3 +44,44 @@ async function agregar_producto_temporal() {
     }
 
 }
+
+/*** */
+
+function agregar_producto_venta(id, precio, cantidad = 1) {
+    fetch(base_url + 'control/VentaController.php?tipo=registrarTemporal', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `id_producto=${id}&precio=${precio}&cantidad=${cantidad}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+        cargarCarritoTemporal();
+    });
+}
+/*** */
+
+function eliminarProductoTemporal(id) {
+    if (!id) return console.log('id inválido para eliminar:', id);
+
+    const datos = new FormData();
+    datos.append('id', id);
+
+    fetch(base_url + 'control/VentaController.php?tipo=eliminarTemporal', {
+        method: 'POST',
+        body: datos
+    })
+    .then(res => res.json())
+    .then(resp => {
+        console.log('resp eliminar:', resp);
+        if (resp.status) {
+            // recargar carrito
+            cargarCarritoTemporal();
+        } else {
+            alert('No se pudo eliminar: ' + (resp.msg || 'error'));
+        }
+    })
+    .catch(err => {
+        console.error('Error fetch eliminar:', err);
+    });
+}

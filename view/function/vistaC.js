@@ -27,7 +27,7 @@ async function cargarProductos(buscar = '') {
         // ← VERIFICAR SI HAY ERROR EN LA RESPUESTA
         if (!res.status) {
             console.log("No hay productos o error:", res.msg);
-            document.getElementById('productos-container').innerHTML = 
+            document.getElementById('productos-container').innerHTML =
                 '<div class="col-12 text-center py-5"><h4 class="text-muted">No se encontraron productos</h4></div>';
             return;
         }
@@ -50,7 +50,7 @@ async function cargarProductos(buscar = '') {
         }
 
         json.forEach(producto => {
-            const imagenSrc = producto.imagen 
+            const imagenSrc = producto.imagen
                 ? base_url + producto.imagen.replace(/^uploads\//i, 'Uploads/')
                 : 'https://via.placeholder.com/300x200?text=Sin+Imagen';
 
@@ -73,20 +73,25 @@ async function cargarProductos(buscar = '') {
                             <button class="btn btn-outline-primary btn-sm flex-fill">
                                 Ver Detalles
                             </button>
-                            <button class="btn btn-success btn-sm flex-fill" onclick="agregar_producto_venta(${producto.id})">
-                                Añadir
-                            </button>
+   <button class="btn btn-success btn-sm flex-fill" 
+    onclick="agregar_producto_venta(${producto.id}, ${producto.precio})">
+Añadir
+</button>
+
+
+
+
                         </div>
                     </div>
                 </div>
             `;
             container.appendChild(card);
-           let id = document.getElementById('id_producto_venta');
-    let precio = document.getElementById('producto_precio_venta');
-    let cantidad = document.getElementById('producto_cantidad_venta');
-    id.value=producto.id;
-    precio.value =producto.precio;
-    cantidad.value =1;
+            let id = document.getElementById('id_producto_venta');
+            let precio = document.getElementById('producto_precio_venta');
+            let cantidad = document.getElementById('producto_cantidad_venta');
+            id.value = producto.id;
+            precio.value = producto.precio;
+            cantidad.value = 1;
         });
 
     } catch (e) {
@@ -101,7 +106,7 @@ async function cargarProductos(buscar = '') {
 function cargarCarousel(productos) {
     const carouselInner = document.querySelector('#productos-carousel .carousel-inner');
     const carouselIndicators = document.querySelector('#productos-carousel .carousel-indicators');
-    
+
     if (!carouselInner || !carouselIndicators || productos.length === 0) return;
 
     carouselInner.innerHTML = '';
@@ -118,10 +123,10 @@ function cargarCarousel(productos) {
             indicator.ariaCurrent = 'true';
         }
         carouselIndicators.appendChild(indicator);
-   
+
 
         // Item del carousel
-        const imagenSrc = producto.imagen 
+        const imagenSrc = producto.imagen
             ? base_url + producto.imagen.replace(/^uploads\//i, 'Uploads/')
             : 'https://via.placeholder.com/800x400?text=Producto+Destacado';
 
@@ -137,3 +142,64 @@ function cargarCarousel(productos) {
         carouselInner.appendChild(item);
     });
 }
+
+/*** */
+
+function cargarCarritoTemporal() {
+fetch(base_url + 'control/VentaController.php?tipo=listarTemporal')
+
+        .then(res => res.json())
+        .then(data => {
+
+            // Obtener tabla
+            let tabla = document.getElementById("tabla-productos");
+            let totalGeneral = 0;
+            tabla.innerHTML = ""; // limpiar
+
+            if (!data.status || data.data.length === 0) {
+                tabla.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">
+                            No hay productos en el carrito
+                        </td>
+                    </tr>`;
+                document.getElementById("contador-carrito").innerText = "0";
+                document.getElementById("subtotal-carrito").innerText = "S/ 0.00";
+                document.getElementById("total-carrito").innerText = "S/ 0.00";
+                return;
+            }
+
+           data.data.forEach(item => {
+
+    let total = item.cantidad * item.precio;
+    totalGeneral += total;
+
+    tabla.innerHTML += `
+        <tr>
+            <td>${item.nombre}</td>
+            <td class="text-center">${item.cantidad}</td>
+            <td class="text-end">S/ ${parseFloat(item.precio).toFixed(2)}</td>
+            <td class="text-end fw-bold text-success">S/ ${total.toFixed(2)}</td>
+            <td class="text-center">
+                <button class="btn btn-danger btn-sm"
+                    onclick="eliminarProductoTemporal(${item.id})">
+                    X
+                </button>
+            </td>
+        </tr>
+    `;
+});
+
+
+            // Mostrar totales
+            document.getElementById("contador-carrito").innerText = data.data.length;
+            document.getElementById("subtotal-carrito").innerText = `S/ ${totalGeneral.toFixed(2)}`;
+
+            let totalConIGV = totalGeneral * 1.18;
+            document.getElementById("total-carrito").innerText = `S/ ${totalConIGV.toFixed(2)}`;
+
+        })
+        .catch(err => console.log("Error al cargar carrito: " + err));
+}
+
+/*** */

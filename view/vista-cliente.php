@@ -68,42 +68,10 @@
                                 </thead>
                                 <tbody id="tabla-productos">
                                     <!-- PRODUCTO 1 -->
-                                    <tr>
-                                        <td class="fw-bold">Azúcar</td>
-                                        <td class="text-center">
-                                            <div class="btn-group btn-group-sm">
-                                                <button class="btn btn-outline-secondary restar" data-index="0">-</button>
-                                                <span class="btn btn-light cantidad px-3">2</span>
-                                                <button class="btn btn-outline-secondary sumar" data-index="0">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-end">S/ 2.00</td>
-                                        <td class="text-end fw-bold text-success subtotal-item">S/ 4.00</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-danger eliminar" data-index="0" title="Eliminar">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                  
 
                                     <!-- PRODUCTO 2 -->
-                                    <tr>
-                                        <td class="fw-bold">Agua Cielo</td>
-                                        <td class="text-center">
-                                            <div class="btn-group btn-group-sm">
-                                                <button class="btn btn-outline-secondary restar" data-index="1">-</button>
-                                                <span class="btn btn-light cantidad px-3">1</span>
-                                                <button class="btn btn-outline-secondary sumar" data-index="1">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="text-end">S/ 4.00</td>
-                                        <td class="text-end fw-bold text-success subtotal-item">S/ 4.00</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-danger eliminar" data-index="1" title="Eliminar">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                               
                                 </tbody>
                             </table>
                         </div>
