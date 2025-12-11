@@ -46,42 +46,61 @@ async function agregar_producto_temporal() {
 }
 
 /*** */
+async function listar_temporales() {
+    try {
+        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=listar_venta_temporal', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache'
 
-function agregar_producto_venta(id, precio, cantidad = 1) {
-    fetch(base_url + 'control/VentaController.php?tipo=registrarTemporal', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `id_producto=${id}&precio=${precio}&cantidad=${cantidad}`
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-        cargarCarritoTemporal();
-    });
-}
-/*** */
+        });
+        json = await respuesta.json();
+        if (json.status) {
+            let lista_temporal = '';
+            array.fetch(t_venta => {
+                lista_temporal += `<tr>
+            <td>${t_venta.nombre}</td>
+            <td><input type="number" id="cant_${t_venta.id}" value=""${t_venta.cantidad} style="width: 60px;" onkeyup="actualizar_subtotal(${t_venta.id},${t_venta.precio} );" onchage="actualizar_subtotal(${t_venta.id},${t_venta.precio} );"></td>
+            <td>S/. ${t_venta.precio}</td>
+            
+            <td id="subtotal_${t_venta.id}">S/. ${t_venta.cantidad * t_venta.precio}</td>
+            </td>
+              <button class="btn btn-danger btn-sm">
+                    eliminar  </button>
+        </tr>
+    `
+            });
+            document.getElementById("lista_compra").innerHTML = lista_temporal;
 
-function eliminarProductoTemporal(id) {
-    if (!id) return console.log('id inválido para eliminar:', id);
-
-    const datos = new FormData();
-    datos.append('id', id);
-
-    fetch(base_url + 'control/VentaController.php?tipo=eliminarTemporal', {
-        method: 'POST',
-        body: datos
-    })
-    .then(res => res.json())
-    .then(resp => {
-        console.log('resp eliminar:', resp);
-        if (resp.status) {
-            // recargar carrito
-            cargarCarritoTemporal();
-        } else {
-            alert('No se pudo eliminar: ' + (resp.msg || 'error'));
         }
-    })
-    .catch(err => {
-        console.error('Error fetch eliminar:', err);
-    });
+    } catch (error) {
+        console.log("error al cargar productos temporales " + error);
+    }
+
 }
+
+async function actualizar_subtotal(id, precio) {
+    let cantidad = document.getElementById('cant_' + id).value;
+    try {
+        const datos = new FormData();
+        datos.append('id', id);
+        datos.append('cantidad', cantidad);
+        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=actualizar_cantidad', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+
+        });
+        json = await respuesta.json();
+        if (json.status) {
+            subtotal=cantidad*precio;
+            document.getElementById('subtotal_'+id).innerHTML = 'S/.'+subtotal;
+        }
+
+    } catch (error) {
+        console.log("error al actualizar cantidad " + error);
+    }
+}
+
+

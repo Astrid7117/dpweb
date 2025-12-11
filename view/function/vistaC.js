@@ -144,7 +144,7 @@ function cargarCarousel(productos) {
 }
 
 /*** */
-
+/*
 function cargarCarritoTemporal() {
 fetch(base_url + 'control/VentaController.php?tipo=listarTemporal')
 
@@ -201,5 +201,5 @@ fetch(base_url + 'control/VentaController.php?tipo=listarTemporal')
         })
         .catch(err => console.log("Error al cargar carrito: " + err));
 }
-
+*/
 /*** */

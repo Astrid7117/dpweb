@@ -61,14 +61,21 @@
                                     <tr>
                                         <th>Producto</th>
                                         <th class="text-center">Cantidad</th>
-                                        <th class="text-end">Precio</th>
+                                        <th class="text-end">Precio U</th>
                                         <th class="text-end">Total</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tabla-productos">
                                     <!-- PRODUCTO 1 -->
-                                  
+                                  <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            </td>
+       
+        </tr>
 
                                     <!-- PRODUCTO 2 -->
                                
@@ -110,5 +117,6 @@
                 agregar_producto_temporal();
             }
         })
+        listar_temporales();
     </script>
 </body>
