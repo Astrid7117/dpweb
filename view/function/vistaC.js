@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 async function cargarProductos(buscar = '') {
     try {
         const datos = new FormData();
-        datos.append('dato', buscar); // ← Ahora SÍ enviamos el texto
+        datos.append('dato', buscar); //  Ahora SÍ enviamos el texto
 
         const respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=buscar_Producto_venta', {
             method: 'POST',
@@ -24,7 +24,7 @@ async function cargarProductos(buscar = '') {
 
         const res = await respuesta.json();
 
-        // ← VERIFICAR SI HAY ERROR EN LA RESPUESTA
+        //  VERIFICAR SI HAY ERROR EN LA RESPUESTA
         if (!res.status) {
             console.log("No hay productos o error:", res.msg);
             document.getElementById('productos-container').innerHTML =
@@ -77,9 +77,6 @@ async function cargarProductos(buscar = '') {
     onclick="agregar_producto_venta(${producto.id}, ${producto.precio})">
 Añadir
 </button>
-
-
-
 
                         </div>
                     </div>
@@ -143,63 +140,3 @@ function cargarCarousel(productos) {
     });
 }
 
-/*** */
-/*
-function cargarCarritoTemporal() {
-fetch(base_url + 'control/VentaController.php?tipo=listarTemporal')
-
-        .then(res => res.json())
-        .then(data => {
-
-            // Obtener tabla
-            let tabla = document.getElementById("tabla-productos");
-            let totalGeneral = 0;
-            tabla.innerHTML = ""; // limpiar
-
-            if (!data.status || data.data.length === 0) {
-                tabla.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="text-center text-muted py-4">
-                            No hay productos en el carrito
-                        </td>
-                    </tr>`;
-                document.getElementById("contador-carrito").innerText = "0";
-                document.getElementById("subtotal-carrito").innerText = "S/ 0.00";
-                document.getElementById("total-carrito").innerText = "S/ 0.00";
-                return;
-            }
-
-           data.data.forEach(item => {
-
-    let total = item.cantidad * item.precio;
-    totalGeneral += total;
-
-    tabla.innerHTML += `
-        <tr>
-            <td>${item.nombre}</td>
-            <td class="text-center">${item.cantidad}</td>
-            <td class="text-end">S/ ${parseFloat(item.precio).toFixed(2)}</td>
-            <td class="text-end fw-bold text-success">S/ ${total.toFixed(2)}</td>
-            <td class="text-center">
-                <button class="btn btn-danger btn-sm"
-                    onclick="eliminarProductoTemporal(${item.id})">
-                    X
-                </button>
-            </td>
-        </tr>
-    `;
-});
-
-
-            // Mostrar totales
-            document.getElementById("contador-carrito").innerText = data.data.length;
-            document.getElementById("subtotal-carrito").innerText = `S/ ${totalGeneral.toFixed(2)}`;
-
-            let totalConIGV = totalGeneral * 1.18;
-            document.getElementById("total-carrito").innerText = `S/ ${totalConIGV.toFixed(2)}`;
-
-        })
-        .catch(err => console.log("Error al cargar carrito: " + err));
-}
-*/
-/*** */
