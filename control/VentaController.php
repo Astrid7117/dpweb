@@ -35,11 +35,10 @@ if ($tipo=="listar_venta_temporal") {
       $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
          $b_producto = $objVenta->buscarTemporales();
          if ($b_producto) {
-              $respuesta = array('status' => true, 'msg' => $b_producto);
+              $respuesta = array('status' => true, 'data' => $b_producto);
          }else{
                 $respuesta = array('status' => false, 'msg' => 'no se encontraron datos');
          }
-         $respuesta = array('status' => false, 'data' => $b_producto);
 
            echo json_encode($respuesta);
 }

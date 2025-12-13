@@ -4,18 +4,18 @@
         <div class="row">
 
             <!-- PRODUCTOS PRINCIPALES -->
-            <div class="col-12 col-lg-9">
+            <div class="col-12 col-lg-8">
 
                 <!-- BUSCADOR DE PRODUCTOS -->
                 <div class="row mb-4">
                     <div class="col-12 col-md-6 mx-auto">
                         <div class="input-group shadow-sm">
-                            
-                           </span>
+
+                            </span>
                             <input type="text" id="busqueda_venta" class="form-control" placeholder="Buscar productos" onkeyup="cargarProductos();">
                             <input type="hidden" id="id_producto_venta">
-                              <input type="hidden" id="producto_precio_venta">
-                                <input type="hidden" id="producto_cantidad_venta" value="1">
+                            <input type="hidden" id="producto_precio_venta">
+                            <input type="hidden" id="producto_cantidad_venta" value="1">
                         </div>
                     </div>
                 </div>
@@ -37,14 +37,14 @@
                     </button>
                 </div>
 
-                <h2 class="text-center mb-4">Productos Disponibles</h2>
+                <h2 class="text-center mb-12">Productos Disponibles</h2>
                 <div id="productos-container" class="row">
                     <!-- Tarjetas de productos cargadas aquí -->
                 </div>
             </div>
 
             <!-- CARRITO DE COMPRAS FIJO AL COSTADO -->
-            <div class="col-12 col-lg-3 position-sticky top-0" style="height: 100vh; overflow-y: auto; z-index: 1000;">
+            <div class="col-12 col-lg-4 position-sticky top-0 carrito" style="height: 100vh; overflow-y: auto; z-index: 1000;">
                 <div class="bg-white shadow-lg rounded-3 p-4 h-100 border-start border-3 border-success">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="mb-0 text-success fw-bold">
@@ -60,63 +60,45 @@
                                 <thead class="table-success text-dark">
                                     <tr>
                                         <th>Producto</th>
-                                        <th class="text-center">Cantidad</th>
-                                        <th class="text-end">Precio U</th>
-                                        <th class="text-end">Total</th>
-                                        <th class="text-center">Acciones</th>
+                                        <th>Cant.</th>
+                                        <th>P. Unit.</th>
+                                        <th>SubTotal</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
-                                <tbody id="tabla-productos">
-                                    <!-- PRODUCTO 1 -->
-                                  <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            </td>
-       
-        </tr>
-
-                                    <!-- PRODUCTO 2 -->
-                               
+                                </thead>
+                                <tbody id="lista_compra">
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
-                    <div class="border-top pt-3">
-                        <div class="d-flex justify-content-between mb-2">
-                            <strong>Subtotal:</strong>
-                            <span id="subtotal-carrito">S/ 0.00</span>
+                    <div class="row">
+                        <div class="col-12 text-end">
+                            <h4>Subtotal : <label id="subtotal_general"></label></h4>
+                            <h4>Igv : <label id="igv_general"></label></h4>
+                            <h4>Total : <label id="total"></label></h4>
+                            <button class="btn btn-success">Realizar Venta</button>
                         </div>
-                        <div class="d-flex justify-content-between mb-3">
-                            <strong>IGV</strong>
-                            <span class="text-success">0.18</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-4 fs-5">
-                            <strong>Total:</strong>
-                            <strong id="total-carrito" class="text-success">S/ 0.00</strong>
-                        </div>
-
                     </div>
-
-                  
                 </div>
             </div>
         </div>
     </div>
+
+  
     <!-- FIN DE CUERPO DE PAGINA -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/estilos/vistaC.css">
     <script src="<?php echo BASE_URL; ?>view/function/vistaC.js"></script>
-     <script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
+    <script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
     <script src="<?php echo BASE_URL; ?>view/function/venta.js"></script>
     <script>
         let input = document.getElementById("busqueda_venta");
-        input.addEventListener('keydown', (event)=>{
+        input.addEventListener('keydown', (event) => {
             if (event.key == 'Enter') {
                 agregar_producto_temporal();
             }
         })
         listar_temporales();
+        act_subt_general();
     </script>
 </body>
