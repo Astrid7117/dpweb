@@ -77,7 +77,7 @@
                             <h4>Subtotal : <label id="subtotal_general"></label></h4>
                             <h4>Igv : <label id="igv_general"></label></h4>
                             <h4>Total : <label id="total"></label></h4>
-                            <button class="btn btn-success">Realizar Venta</button>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Realizar Venta</button>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,45 @@
         </div>
     </div>
 
-  
+    <!-- Modal -->
+    <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Registro de Venta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form_venta">
+                        <div class="row">
+                            <label for="cliente_nombre" class="from-label">DNI del Cliente</label>
+                            <input type="text" class="form-control" name="cliente_dni" id="cliente_dni" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="11">
+
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary mt-4" onclick="buscar_cliente_venta();">Buscar Cliente</button>
+                        </div>
+                        <div class="row">
+                            <label for="cliente_nombre" class="from-label">Nombre Cliente</label>
+                            <input type="text" class="form-control" name="cliente_nombre" id="cliente_nombre" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="fecha_venta" class="from-label">Fecha de venta</label>
+                            <input type="datetime" class="form-control" name="fecha_venta" id="fecha_venta" value="<?=  date('Y-m-d H:i') ?>">
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="registrarVenta();">Registrar venta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- FIN DE CUERPO DE PAGINA -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>view/estilos/vistaC.css">
     <script src="<?php echo BASE_URL; ?>view/function/vistaC.js"></script>

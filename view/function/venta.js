@@ -14,9 +14,19 @@ producto2.cantidad = 1;
 productos_venta[id] = producto;
 productos_venta[id2] = producto2;
 console.log(productos_venta);
+/** */
 
-
-async function agregar_producto_temporal() {
+async function agregar_producto_temporal(id_product = 0, price = 0, cant = 1) {
+    if (id_product == 0) {
+        id = document.getElementById('id_producto_venta').value;
+    } else {
+        id = id_product;
+    }
+    if (price == 0) {
+        precio = document.getElementById('producto_precio_venta').value;
+    } else {
+        precio = price;
+    }    
     let id = document.getElementById('id_producto_venta').value;
     let precio = document.getElementById('producto_precio_venta').value;
     let cantidad = document.getElementById('producto_cantidad_venta').value;
@@ -117,7 +127,7 @@ async function act_subt_general() {
             json.data.forEach(t_venta => {
                 subtotal_general += (t_venta.precio * t_venta.cantidad);
             });
-            igv = subtotal_general * 0.18;
+            igv = (subtotal_general * 0.18).toFixed(2);
             total = subtotal_general + igv;
             document.getElementById('subtotal_general').innerHTML = 'S/. ' + subtotal_general;
             document.getElementById('igv_general').innerHTML = 'S/. ' + igv;
@@ -125,5 +135,64 @@ async function act_subt_general() {
         }
     } catch (error) {
         console.log("error al cargar productos temporales " + error);
+    }
+}
+
+
+/** */
+async function buscar_cliente_venta() {
+    const dni = document.getElementById('cliente_dni').value.trim();
+    if (dni === '') {
+        alert('Ingrese un DNI');
+        return;
+    }
+    try {
+        const response = await fetch(base_url + 'control/UsuarioController.php?tipo=buscar_cliente&dni=' + dni);
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            document.getElementById('cliente_nombre').value = data.nombre;
+            document.getElementById('cliente_id').value = data.id;
+        } else {
+            alert('Cliente no encontrado');
+            document.getElementById('cliente_nombre').value = '';
+        }
+    } catch (error) {
+        console.error('Error al buscar cliente:', error);
+    }
+}
+
+
+/*** */
+
+async function registrarVenta() {
+    let id_cliente = document.getElementById('id_cliente_venta').value;
+    let fecha_venta = document.getElementById('fecha_venta').value;
+    if (id_cliente == '' || fecha_venta === '') {
+        alert("Debe ingresar el cliente y la fecha de la venta");
+        return;
+    }
+    try {
+        const datos = new FormData();
+        datos.append('id_cliente', id_cliente);
+        datos.append('fecha_venta', fecha_venta);
+
+        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrar_venta', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+
+        });
+        json = await respuesta.json();
+        if (json.status) {
+            alert("venta reagistrada con exito")
+            window.location.reload();
+        } else {
+            alert(json.msg);
+        }
+
+    } catch (error) {
+        console.error('Error al registrar venta:', error);
     }
 }

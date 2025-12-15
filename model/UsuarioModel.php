@@ -34,14 +34,15 @@ class UsuarioModel
         return $sql->num_rows;
     }
     // Método para buscar a una persona por su número de identidad, normalmente usado en el inicio de sesión
-    public function buscarPersonaPorNroIdentidad($nro_identidad)
-    {
-        $consulta = "SELECT id, razon_social, password FROM persona WHERE nro_identidad='$nro_identidad' LIMIT 1";
-        $sql = $this->conexion->query($consulta);
-        // devuelve los datos como un objeto
-        return $sql->fetch_object();
-    }
-
+     public function buscarPersonaPorNroIdentidad($nro_identidad)
+{
+    $consulta = "SELECT id, razon_social, password, rol FROM persona WHERE nro_identidad=? LIMIT 1";
+    $stmt = $this->conexion->prepare($consulta);
+    $stmt->bind_param("s", $nro_identidad);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    return $resultado->fetch_object();
+}
 
     public function verUsuarios()
     {

@@ -154,3 +154,25 @@ if ($tipo == "ver_proveedores_detallados") {
     }
     echo json_encode($respuesta);
 }
+
+
+/** */
+if ($tipo == "buscar_cliente") {
+    header('Content-Type: application/json');
+    $dni = $_GET['dni'] ?? '';
+    $respuesta = ['status' => 'error']; 
+    if($dni !== '') {
+        $objUsuario = new UsuarioModel();
+        $cliente = $objUsuario->buscarPersonaPorNroIdentidad($dni);
+        if($cliente && $cliente->rol == '2') { 
+            $respuesta = [
+                'status' => 'success',
+                'nombre' => $cliente->razon_social,
+                'id' => $cliente->id
+            ];
+        }
+    }
+    
+    echo json_encode($respuesta);
+    exit;
+}

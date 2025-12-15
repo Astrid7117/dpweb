@@ -74,7 +74,7 @@ async function cargarProductos(buscar = '') {
                                 Ver Detalles
                             </button>
    <button class="btn btn-success btn-sm flex-fill" 
-    onclick="agregar_producto_venta(${producto.id}, ${producto.precio})">
+    onclick="agregar_producto_temporal(${producto.id}, ${producto.precio})">
 Añadir
 </button>
 
