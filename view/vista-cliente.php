@@ -63,7 +63,7 @@
                                         <th>Cant.</th>
                                         <th>P. Unit.</th>
                                         <th>SubTotal</th>
-                                        <th></th>
+                                        <th>Acciòn</th>
                                     </tr>
                                 </thead>
                                 </thead>
@@ -96,7 +96,8 @@
                 <div class="modal-body">
                     <form id="form_venta">
                         <div class="row">
-                            <label for="cliente_nombre" class="from-label">DNI del Cliente</label>
+                                  <div class="col-md-6">
+                            <label for="cliente_dni" class="form-label">DNI del Cliente</label>
                             <input type="text" class="form-control" name="cliente_dni" id="cliente_dni" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="11">
 
                         </div>
@@ -104,8 +105,9 @@
                             <button type="button" class="btn btn-primary mt-4" onclick="buscar_cliente_venta();">Buscar Cliente</button>
                         </div>
                         <div class="row">
-                            <label for="cliente_nombre" class="from-label">Nombre Cliente</label>
+                            <label for="cliente_nombre" class="form-label">Nombre Cliente</label>
                             <input type="text" class="form-control" name="cliente_nombre" id="cliente_nombre" readonly>
+                            <input type="hidden" class="form-control" id="id_cliente_venta">
                         </div>
                         <div class="col-md-3">
                             <label for="fecha_venta" class="from-label">Fecha de venta</label>

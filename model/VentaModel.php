@@ -75,7 +75,7 @@ class VentaModel
 }
 //registrar la venta 
   public function registrar_venta($correlativo, $fecha_venta, $id_cliente, $id_vendedor){
-    $consulta = "INSERT INTO venta (codigo, fecha_hora, id_cliente, id_vendedor) VALUES ('$correlativo', '$fecha_venta', '$id_cliente' '$id_vendedor')";
+    $consulta = "INSERT INTO venta (codigo, fecha_hora, id_cliente, id_vendedor) VALUES ('$correlativo', '$fecha_venta', '$id_cliente', '$id_vendedor')";
         $sql =  $this->conexion->query($consulta);
     if ($sql) {
        return $this->conexion->insert_id;
@@ -90,3 +90,5 @@ return 0;
     return $sql;
   }
 }
+
+

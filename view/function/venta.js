@@ -26,10 +26,15 @@ async function agregar_producto_temporal(id_product = 0, price = 0, cant = 1) {
         precio = document.getElementById('producto_precio_venta').value;
     } else {
         precio = price;
-    }    
-    let id = document.getElementById('id_producto_venta').value;
+    } 
+      if (cant == 0) {
+        cantidad = document.getElementById('producto_cantidad_venta').value;
+    } else {
+        cantidad = cant;
+    }   
+    /*let id = document.getElementById('id_producto_venta').value;
     let precio = document.getElementById('producto_precio_venta').value;
-    let cantidad = document.getElementById('producto_cantidad_venta').value;
+    let cantidad = document.getElementById('producto_cantidad_venta').value;*/
     const datos = new FormData();
     datos.append('id_producto', id);
     datos.append('precio', precio);
@@ -49,6 +54,8 @@ async function agregar_producto_temporal(id_product = 0, price = 0, cant = 1) {
                 alert("el producto fue actualizado");
             }
         }
+           listar_temporales();
+           act_subt_general();
     } catch (error) {
         console.log("error en agregar producto temporal " + error);
     }
@@ -74,7 +81,7 @@ async function listar_temporales() {
             <td>S/. ${t_venta.precio}</td>
             <td id="subtotal_${t_venta.id}">S/. ${t_venta.cantidad * t_venta.precio}</td>
            <td>
-            <button class="btn btn-danger btn-sm">Eliminar</button>
+            <button class="btn btn-danger btn-sm" onclick="eliminarTemporal(${t_venta.id})">Eliminar</button>
             </td>
         </tr>
     `
@@ -128,8 +135,8 @@ async function act_subt_general() {
                 subtotal_general += (t_venta.precio * t_venta.cantidad);
             });
             igv = (subtotal_general * 0.18).toFixed(2);
-            total = subtotal_general + igv;
-            document.getElementById('subtotal_general').innerHTML = 'S/. ' + subtotal_general;
+            total = (parseFloat(subtotal_general) + parseFloat(igv)).toFixed(2);
+            document.getElementById('subtotal_general').innerHTML = 'S/. ' + subtotal_general.toFixed(2);
             document.getElementById('igv_general').innerHTML = 'S/. ' + igv;
             document.getElementById('total').innerHTML = 'S/. ' + total;
         }
@@ -141,24 +148,25 @@ async function act_subt_general() {
 
 /** */
 async function buscar_cliente_venta() {
-    const dni = document.getElementById('cliente_dni').value.trim();
-    if (dni === '') {
-        alert('Ingrese un DNI');
-        return;
-    }
+    let dni = document.getElementById('cliente_dni').value;
     try {
-        const response = await fetch(base_url + 'control/UsuarioController.php?tipo=buscar_cliente&dni=' + dni);
-        const data = await response.json();
-
-        if (data.status === 'success') {
-            document.getElementById('cliente_nombre').value = data.nombre;
-            document.getElementById('cliente_id').value = data.id;
+        const datos = new FormData();
+        datos.append('dni', dni);
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=buscar_por_dni', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        json = await respuesta.json();
+        if (json.status) {
+            document.getElementById('cliente_nombre').value = json.data.razon_social;
+            document.getElementById('id_cliente_venta').value = json.data.id;
         } else {
-            alert('Cliente no encontrado');
-            document.getElementById('cliente_nombre').value = '';
+            alert(json.msg);
         }
     } catch (error) {
-        console.error('Error al buscar cliente:', error);
+        console.log("error al buscar cliente por dni " + error);
     }
 }
 
@@ -169,8 +177,7 @@ async function registrarVenta() {
     let id_cliente = document.getElementById('id_cliente_venta').value;
     let fecha_venta = document.getElementById('fecha_venta').value;
     if (id_cliente == '' || fecha_venta === '') {
-        alert("Debe ingresar el cliente y la fecha de la venta");
-        return;
+        return alert("debe completar todos los campos");
     }
     try {
         const datos = new FormData();
@@ -194,5 +201,37 @@ async function registrarVenta() {
 
     } catch (error) {
         console.error('Error al registrar venta:', error);
+    }
+}
+
+
+
+/** eliminar */
+async function eliminarTemporal(id) {
+    if (!confirm("¿Deseas eliminar este producto?")) {
+        return;
+    }
+
+    try {
+        const datos = new FormData();
+        datos.append('id', id);
+
+        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=eliminar_temporal', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+
+        json = await respuesta.json();
+
+        if (json.status) {
+            listar_temporales();   
+        } else {
+            alert(json.msg);
+        }
+
+    } catch (error) {
+        console.log("Error al eliminar temporal: " + error);
     }
 }
