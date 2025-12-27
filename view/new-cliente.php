@@ -8,7 +8,7 @@
                     <div class="mb-3 row">
                         <label for="nro_identidad" class="col-sm-4 col-form-label">Nro de Documento :</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" id="nro_identidad" name="nro_identidad" required>
+                            <input type="text" class="form-control" id="nro_identidad" name="nro_identidad" maxlength="11" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -20,7 +20,7 @@
                     <div class="mb-3 row">
                         <label for="telefono" class="col-sm-4 col-form-label">Telefono :</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" id="telefono" name="telefono" required>
+                            <input type="text" class="form-control" id="telefono" name="telefono" maxlength="15" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                         </div>
                     </div>
                     <div class="mb-3 row">

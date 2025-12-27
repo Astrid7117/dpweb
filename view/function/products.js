@@ -280,9 +280,11 @@ async function view_productos() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
 if (document.getElementById('content_productos')) {
     view_productos();
-}
+    }
+});
 
 if (document.getElementById('btn_guardar')) {
     document.getElementById('btn_guardar').addEventListener('click', function () {
